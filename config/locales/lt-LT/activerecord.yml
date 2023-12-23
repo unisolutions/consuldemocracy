@@ -32,8 +32,8 @@ lt:
         one: "Komentaras"
         other: "Komentarai"
       debate:
-        one: "Debatai"
-        other: "Debatai"
+        one: "Diskusija"
+        other: "Diskusijos"
       tag:
         one: "Žymė"
         other: "Žymės"
@@ -74,8 +74,8 @@ lt:
         one: "Balsavimo lapas"
         other: "Balsavimo lapai"
       proposal:
-        one: "Piliečių pasiūlymas"
-        other: "Piliečių pasiūlymai"
+        one: "idėją"
+        other: "Piliečių idėjos"
       sdg/goal:
         one: "tikslas"
         other: "tikslai"
@@ -104,8 +104,8 @@ lt:
         one: "Procesas"
         other: "Procesai"
       legislation/proposal:
-        one: "Pasiūlymas"
-        other: "Pasiūlymai"
+        one: "Idėja"
+        other: "Idėjos"
       legislation/draft_versions:
         one: "Juodraštis"
         other: "Juodraščiai"
@@ -256,8 +256,8 @@ lt:
         terms_of_service: "Paslaugų teikimo sąlygos"
         title: "Pavadinimas"
       debate/translation:
-        title: "Debatų pavadinimas"
-        description: "Pradinis debatų tekstas"
+        title: "Diskusijos pavadinimas"
+        description: "Aprašymas"
       proposal:
         author: "Autorius"
         title: "Pavadinimas"
@@ -291,8 +291,8 @@ lt:
         phone_number: "Telefono numeris"
         public_activity: "Visuomenei prieinama mano veiklos sąrašą"
         public_interests: "Visuomenei prieinami elementai, kuriuos stebiu"
-        recommended_debates: "Man rekomenduoti debatai"
-        recommended_proposals: "Man rekomenduoti pasiūlymai"
+        recommended_debates: "Man rekomenduotos diskusijos"
+        recommended_proposals: "Man rekomenduotos idėjos"
         redeemable_code: "El. paštu gautas verifikacijos kodas"
       direct_message:
         title: "Pavadinimas"
@@ -508,7 +508,7 @@ lt:
         action_type: Tipas
         action_type_proposed_action: "Pasiūlytas Veiksmas"
         action_type_resource: "Resursas"
-        published_proposal: "Publikuoti Pasiūlymai?"
+        published_proposal: "Publikuoti Idėją?"
       dashboard/administrator_task:
         source: Šaltinis
         user: Vykdytojas
@@ -575,7 +575,7 @@ lt:
             end_date:
               invalid_date_range: "Turi Būti Arba Pradžios Diena, Arba Po Jos"
             debate_end_date:
-              invalid_date_range: "Turi Būti Arba Debatų Pradžios Diena, Arba Po Jos"
+              invalid_date_range: "Turi Būti Arba Diskusijos Pradžios Diena, Arba Po Jos"
             draft_end_date:
               invalid_date_range: "Turi Būti Arba Projekto Rašymo Pradžia, Arba Po Jos"
             allegations_end_date:
