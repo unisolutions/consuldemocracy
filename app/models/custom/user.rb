@@ -257,6 +257,7 @@ class User < ApplicationRecord
       erase_reason: erase_reason,
       username: nil,
       email: nil,
+      document_number: nil,
       unconfirmed_email: nil,
       phone_number: nil,
       encrypted_password: "",

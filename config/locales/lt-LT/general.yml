@@ -780,8 +780,8 @@ lt:
     manage:
       all: "Neturite teisės vykdyti šio veiksmo"
   users:
-    login_to_comment: "Norėdami palikti komentarą, turite %{signin} arba %{signup}."
-    login_to_continue: "Norėdami tęsti, turite %{signin} arba %{signup}."
+    login_to_comment: "Norėdami palikti komentarą, turite %{signin}."
+    login_to_continue: "Norėdami tęsti, turite %{signin}."
     signin: "prisijungti"
     signup: "registruotis"
     verify_account: "patvirtinti savo paskyrą"
