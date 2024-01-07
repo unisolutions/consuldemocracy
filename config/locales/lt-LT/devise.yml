@@ -37,8 +37,8 @@ lt:
       updated: "Jūsų slaptažodis sėkmingai pakeistas. Autentifikacija sėkminga."
       updated_not_active: "Jūsų slaptažodis sėkmingai pakeistas."
     registrations:
-      destroyed: "Viso gero! Jūsų paskyra atšaukta. Tikimės greito sugrįžimo."
-      signed_up: "Sveiki atvykę! Jūs esate autentifikuotas."
+      destroyed: "Viso gero! Jūsų paskyra ištrinta. Tikimės greito sugrįžimo."
+      signed_up: "Sveiki atvykę!"
       signed_up_but_inactive: "Jūsų registracija buvo sėkminga, tačiau jūs negalite prisijungti, nes jūsų paskyra dar neaktyvuota."
       signed_up_but_locked: "Jūsų registracija buvo sėkminga, tačiau jūs negalite prisijungti, nes jūsų paskyra užrakinta."
       signed_up_but_unconfirmed: "Jums išsiųstas pranešimas su patvirtinimo nuoroda. Prašome paspausti šią nuorodą, kad aktyvuotumėte savo paskyrą."
