@@ -390,7 +390,7 @@ lt:
         view_proposal: "Ne dabar, eiti į mano idėją"
       already_supported: "Jūs išreiškėte palaikymą šiai idėjai."
       support: Remti
-      undo_support: Neberemti
+      undo_support: Nepatinka
       support_label: "Remti %{proposal}"
       support_title: Remti šią idėją
       supports:
@@ -585,7 +585,7 @@ lt:
       geozone_restricted: "Rajonai"
       geozone_info: "Gali dalyvauti žmonės, registruoti cenzuose: "
       already_answer: "Jūs jau dalyvavote šioje apklausoje"
-      not_logged_in: "Norėdami dalyvauti, turite prisijungti arba užsiregistruoti"
+      not_logged_in: "Norėdami dalyvauti, turite prisijungti"
       unverified: "Norėdami dalyvauti, turite patvirtinti paskyrą"
       cant_answer: "Ši apklausa jūsų rajone neprieinamas"
       section_header:
@@ -600,7 +600,7 @@ lt:
       already_voted_in_booth: "Jūs jau dalyvavote šiame balsavime."
       already_voted_in_web: "Jūs jau dalyvavote šiame balsavime. Jei balsuosite dar kartą, tai perrašys jūsų ankstesnį balsą."
       back: Grįžti į apklausą
-      cant_answer_not_logged_in: "Norėdami dalyvauti, turite %{signin} arba %{signup}."
+      cant_answer_not_logged_in: "Norėdami dalyvauti, turite %{signin}"
       comments_tab: Komentarai
       cant_answer_verify: "Norėdami atsakyti, turite %{verify_link}."
       verify_link: "patvirtinti savo paskyrą"
@@ -780,8 +780,8 @@ lt:
     manage:
       all: "Neturite teisės vykdyti šio veiksmo"
   users:
-    login_to_comment: "Norėdami palikti komentarą, turite %{signin} arba %{signup}."
-    login_to_continue: "Norėdami tęsti, turite %{signin} arba %{signup}."
+    login_to_comment: "Norėdami palikti komentarą, turite %{signin}."
+    login_to_continue: "Norėdami tęsti, turite %{signin}."
     signin: "prisijungti"
     signup: "registruotis"
     verify_account: "patvirtinti savo paskyrą"
