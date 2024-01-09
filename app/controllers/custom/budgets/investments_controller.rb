@@ -97,7 +97,7 @@ module Budgets
 
     def check_show_investments
       unless @budget.show_investments || (@investment && @investment.author == current_user)
-        redirect_to root_path, alert: "You do not have access to view investments."
+        redirect_to root_path, alert: "Investicinių projektų peržiūra šiuo metu išjungta"
       end
     end
 
