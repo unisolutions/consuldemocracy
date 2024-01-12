@@ -6,7 +6,7 @@
 <% end %>
 <div class="row">
   <div class="small-12 column text-center">
-    <span class="budget-title"><%= t("budgets.index.title") %></span>
+    <!--    <span class="budget-title"><%#= t("budgets.index.title") %></span>-->
     <h1><%= budget.name %></h1>
 
     <% if budget.main_link_text.present? && budget.main_link_url.present? %>
@@ -14,7 +14,7 @@
     <% end %>
 
     <p>
-      <%= link_to t("budgets.index.section_header.help"), "#section_help" %>
+      <%= link_to t("budgets.index.section_header.help"), "/help" %>
     </p>
   </div>
 </div>
@@ -40,4 +40,5 @@
 
 <% if @budget.show_investments? %>
   <%= render Budgets::InvestmentsListComponent.new(budget) %>
-<%end %>
+<% end %>
+</div>
