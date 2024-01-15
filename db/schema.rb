@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_10_12_141318) do
+ActiveRecord::Schema.define(version: 2024_01_15_185045) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(version: 2023_10_12_141318) do
     t.string "title"
     t.text "description"
     t.datetime "hidden_at"
+    t.integer "preliminary_price"
     t.index ["budget_investment_id"], name: "index_budget_investment_translations_on_budget_investment_id"
     t.index ["hidden_at"], name: "index_budget_investment_translations_on_hidden_at"
     t.index ["locale"], name: "index_budget_investment_translations_on_locale"
