@@ -16,7 +16,7 @@ lt:
       create_first_community_topic:
         first_theme_not_logged_in: "Jokių problemų nėra, dalyvaukite kuriant pirmąją."
         first_theme: "Sukurkite pirmą bendruomenės temą"
-        sub_first_theme: "Norėdami sukurti temą, turite %{sign_in} arba %{sign_up}."
+        sub_first_theme: "Norėdami sukurti temą, turite %{sign_in}."
       tab:
         participants: "Dalyviai"
       sidebar:

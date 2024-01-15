@@ -7,7 +7,11 @@
 
     <% unless budget.single_heading? %>
       <div>
-        <%= f.select :heading_id, budget_heading_select_options(budget), { include_blank: true } %>
+        <%= f.select :heading_id,
+                     budget_heading_select_options(budget),
+                     { include_blank: true },
+                     label: "Projekto idėjos kategorija"
+        %>
       </div>
     <% end %>
 
@@ -19,14 +23,21 @@
       <div>
         <%= translations_form.text_field :title,
                                          maxlength: Budget::Investment.title_max_length,
+                                         label: "Projekto idėjos pavadinimas <i>(ne daugiau kaip 5 žodžiai)</i>".html_safe,
                                          data: suggest_data(investment) %>
       </div>
-      <div class="js-suggest" data-locale="<%= translations_form.locale %>"></div>
+      <!--      <div class="js-suggest" data-locale="<%#= translations_form.locale %>"></div>-->
 
       <div>
         <%= translations_form.text_area :description,
                                         maxlength: Budget::Investment.description_max_length,
+                                        label: "Projekto idėjos aprašymas <i>(Projekto idėjos tikslas, tikslinė grupė, sprendžiama problema)</i>".html_safe,
                                         class: "html-area" %>
+      </div>
+      <div>
+        <%= translations_form.number_field :preliminary_price,
+                                           label: "Preliminari projekto idėjos vertė <i>(Ne daugiau nei šeši skaitmenys)</i>".html_safe,
+                                           class: "your-custom-class-for-styling" %>
       </div>
     <% end %>
   </fieldset>
@@ -38,7 +49,7 @@
 
     <% if feature?(:allow_images) %>
       <%= render Images::NestedComponent.new(f) %>
-  <% end %>
+    <% end %>
 
     <% if feature?(:allow_attached_documents) %>
       <div class="documents">
@@ -58,16 +69,16 @@
     <% end %>
 
     <div>
-      <%= f.text_field :location %>
+      <%= f.text_field :location, label: "Projekto idėjos įgyvendinimo vieta" %>
     </div>
 
-    <div>
-      <%= f.text_field :organization_name %>
-    </div>
+    <!--    <div>-->
+    <%#= f.text_field :organization_name %>
+    <!--    </div>-->
 
     <div>
       <%#= f.label :tag_list, t("budgets.investments.form.tags_label") %>
-<!--      <p class="help-text" id="tags-list-help-text"><%#= t("budgets.investments.form.tags_instructions") %></p>-->
+      <!--      <p class="help-text" id="tags-list-help-text"><%#= t("budgets.investments.form.tags_instructions") %></p>-->
 
       <!-- <div id="category_tags" class="tags">
         <%= f.label :category_tag_list, t("budgets.investments.form.tag_category_label") %>
@@ -88,17 +99,23 @@
     <%#= render SDG::RelatedListSelectorComponent.new(f) %>
   </fieldset>
 
-  <div class="actions">
+  <div class="actions" style="display: flex; flex-direction: column; align-items: center;">
     <% unless current_user.manager? || investment.persisted? %>
-      <div>
+      <%= f.check_box :plan_accepted,
+                      title: "Naudos atitikimas",
+                      label: "Projekto idėjos rezultatai, jų nauda, atitinka #{link_to('Kauno rajono savivaldybės 2023-2025 m. strateginio veiklos plano', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')}, „Investicijų į kaimo plėtra užtikrinimas“." %>
+      <div style="display: flex; align-items: center; margin-bottom: 10px;">
         <%= f.check_box :terms_of_service,
                         title: t("form.accept_terms_title"),
                         label: t("form.accept_terms",
-                                 policy: link_to(t("form.policy"), "/privacy", target: "blank"),
-                                 conditions: link_to(t("form.conditions"), "/conditions", target: "blank")) %>
+                                 policy: link_to(t("form.policy"), "/privacy", target: 'blank'),
+                                 conditions: link_to(t("form.conditions"), "/conditions", target: 'blank')) %>
       </div>
     <% end %>
 
     <%= f.submit %>
   </div>
+
+
+
 <% end %>

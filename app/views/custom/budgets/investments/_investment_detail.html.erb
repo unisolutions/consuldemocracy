@@ -26,6 +26,8 @@
 
 <%= auto_link_already_sanitized_html wysiwyg(investment.description) %>
 
+<%#= investment.preliminary_price.nil? ? 'No price' : investment.preliminary_price %>
+
 <% if feature?(:map) && map_location_available?(@investment.map_location) %>
   <div class="margin">
     <%= render_map(investment.map_location) %>

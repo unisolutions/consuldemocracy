@@ -110,7 +110,7 @@ lt:
           zero: Jūs nepridėjote jokios investicinės veiklos šioje grupėje.
           verified_only: "Norėdami sukurti naują biudžeto investiciją, %{verify}."
           create: "Kurti biudžeto investiciją"
-          not_logged_in: "Norėdami sukurti naują biudžeto investiciją, %{sign_in} arba %{sign_up}."
+          not_logged_in: "Norėdami sukurti naują biudžeto investiciją, %{sign_in}."
         filter: "Filtruojama pagal projektus"
         filters:
           not_unfeasible: "Aktyvus"
