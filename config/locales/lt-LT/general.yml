@@ -874,7 +874,7 @@ lt:
         btn_text_link: Visos rekomenduojamos diskusijos
       proposals:
         title: Rekomenduojamos idėjos
-        btn_text_link: Visi rekomenduojamos idėjos
+        btn_text_link: Visos rekomenduojamos idėjos
       budget_investments:
         title: Rekomenduojamos investicijos
       slide: "Peržiūrėti %{title}"
