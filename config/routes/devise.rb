@@ -1,5 +1,5 @@
 devise_for :users, controllers: {
-  registrations: "users/registrations",
+  # registrations: "users/registrations",
   sessions: "users/sessions",
   confirmations: "users/confirmations",
   omniauth_callbacks: "users/omniauth_callbacks"
@@ -13,6 +13,13 @@ devise_scope :user do
   delete "users/registrations", to: "users/registrations#delete"
   get :finish_signup, to: "users/registrations#finish_signup"
   patch :do_finish_signup, to: "users/registrations#do_finish_signup"
+
+  get '/viisp/authenticate', to: 'viisp#authenticate', as: :viisp_authenticate
+  post '/viisp/callback', to: 'viisp#callback'
+  get '/viisp/callback', to: 'viisp#callback'
+
+  post '/users/handle', to: 'users/sessions#handle'
+
 end
 
 devise_for :organizations, class_name: "User",
