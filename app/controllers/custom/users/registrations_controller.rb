@@ -6,10 +6,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
   invisible_captcha only: [:create], honeypot: :address, scope: :user
 
   def new
-
     redirect_to new_user_session_path and return
     super
-
     # super do |user|
     #   user.use_redeemable_code = true if params[:use_redeemable_code].present?
     # end
@@ -27,7 +25,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   end
 
   def edit
-    redirect_to root_path
+    redirect_to new_user_session_path and return
   end
 
   def delete_form
