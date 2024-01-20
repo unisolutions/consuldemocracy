@@ -51,6 +51,11 @@ class ViispController < Devise::SessionsController
         verified_at: Time.current
       )
 
+
+      sign_in(resource_name, user)
+      yield user if block_given?
+      respond_with user, location: after_sign_in_path_for(user)
+
       # Save the new user
       if user.save
         flash[:notice] = t('devise.registrations.signed_up')
