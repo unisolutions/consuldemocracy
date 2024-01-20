@@ -2,7 +2,7 @@ class User < ApplicationRecord
   include Verification
   attribute :registering_from_web, default: false
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :database_authenticatable, :recoverable, :rememberable,
          :trackable, :validatable, :omniauthable, :password_expirable, :secure_validatable,
          authentication_keys: [:login]
 
@@ -258,7 +258,6 @@ class User < ApplicationRecord
       erase_reason: erase_reason,
       username: nil,
       email: nil,
-      document_number: nil,
       unconfirmed_email: nil,
       phone_number: nil,
       encrypted_password: "",

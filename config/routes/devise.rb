@@ -1,4 +1,4 @@
-devise_for :users, controllers: {
+devise_for :users, :skip => [:registrations], controllers: {
   # registrations: "users/registrations",
   sessions: "users/sessions",
   confirmations: "users/confirmations",
