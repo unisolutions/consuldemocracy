@@ -51,11 +51,6 @@ class ViispController < Devise::SessionsController
         verified_at: Time.current
       )
 
-
-      sign_in(resource_name, user)
-      yield user if block_given?
-      respond_with user, location: after_sign_in_path_for(user)
-
       # Save the new user
       if user.save
         flash[:notice] = t('devise.registrations.signed_up')
@@ -67,9 +62,9 @@ class ViispController < Devise::SessionsController
 
     # Authenticate the user
     if user
-      # sign_in(resource_name, user)
-      # yield user if block_given?
-      # respond_with user, location: after_sign_in_path_for(user)
+      sign_in(resource_name, user)
+      yield user if block_given?
+      respond_with user, location: after_sign_in_path_for(user)
     else
       flash[:alert] = t('devise.failure.invalid', authentication_keys: 'login')
       redirect_to new_user_session_path
