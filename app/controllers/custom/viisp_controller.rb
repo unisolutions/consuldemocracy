@@ -3,6 +3,7 @@ class ViispController < Devise::SessionsController
   skip_before_action :verify_authenticity_token
 
   def authenticate
+
     VIISP::Auth.configure do |c|
       c.pid = 'VSID000000000113'
       c.private_key = OpenSSL::PKey::RSA.new(File.read('./config/keys/testKey.pem'))
@@ -24,6 +25,7 @@ class ViispController < Devise::SessionsController
   end
 
   def callback
+    back_url_setting = Setting.find_by(key: "back_url")
 
     ticket = params[:ticket]
     identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
@@ -34,7 +36,7 @@ class ViispController < Devise::SessionsController
     email = identity["user_information"]["email"]
 
     if email.blank?
-      default_email = "noemail@email.lt"
+      default_email = "noemail@krs.lt"
       email = default_email
     end
 
@@ -56,7 +58,7 @@ class ViispController < Devise::SessionsController
         flash[:notice] = t('devise.registrations.signed_up')
       else
         flash[:alert] = "Prisijungti nepavyko"
-        redirect_to new_user_session_path and return
+        redirect_to root_path and return
       end
     end
 
@@ -64,10 +66,18 @@ class ViispController < Devise::SessionsController
     if user
       sign_in(resource_name, user)
       yield user if block_given?
-      respond_with user, location: after_sign_in_path_for(user)
+      if user.show_welcome_screen?
+        welcome_path
+      else
+        if back_url_setting
+          redirect_to back_url_setting.value
+        else
+          respond_with user, location: after_sign_in_path_for(user)
+        end
+      end
     else
       flash[:alert] = t('devise.failure.invalid', authentication_keys: 'login')
-      redirect_to new_user_session_path
+      redirect_to root_path
     end
 
   end
