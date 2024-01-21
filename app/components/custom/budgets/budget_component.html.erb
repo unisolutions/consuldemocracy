@@ -31,9 +31,7 @@
       <% else %>
         <%= render Budgets::GroupsAndHeadingsComponent.new(budget) %>
       <% end %>
-
       <%= render Budgets::SupportsInfoComponent.new(budget) %>
-      <%= render Budgets::MapComponent.new(budget) %>
     </div>
   </div>
 </div>
@@ -41,4 +39,6 @@
 <% if @budget.show_investments? %>
   <%= render Budgets::InvestmentsListComponent.new(budget) %>
 <% end %>
+<%= render Budgets::MapComponent.new(budget) %>
+
 </div>
