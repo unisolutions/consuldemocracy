@@ -16,17 +16,15 @@
     params[:retired].present?,
     params[:selected].present?
   ].any? %>
-    <% if false %>
-      <%= render Shared::SearchResultsSummaryComponent.new(
-        results: @proposals,
-        search_terms: @search_terms,
-        advanced_search_terms: @advanced_search_terms
-      ) do %>
-        <% if params[:retired].present? %>
-          <h2><%= t("proposals.index.retired_proposals") %></h2>
-        <% elsif params[:selected].present? %>
-          <h2><%= t("proposals.index.selected_proposals") %></h2>
-        <% end %>
+    <%= render Shared::SearchResultsSummaryComponent.new(
+      results: @proposals,
+      search_terms: @search_terms,
+      advanced_search_terms: @advanced_search_terms
+    ) do %>
+      <% if params[:retired].present? %>
+        <h2><%= t("proposals.index.retired_proposals") %></h2>
+      <% elsif params[:selected].present? %>
+        <h2><%= t("proposals.index.selected_proposals") %></h2>
       <% end %>
     <% end %>
   <% else %>
