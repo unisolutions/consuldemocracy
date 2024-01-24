@@ -199,7 +199,7 @@ lt:
       conditions: Naudojimosi sąlygos
       consul: PROGRAMOS CONSUL DEMOKRATIJA
       consul_url: https://github.com/consuldemocracy/consuldemocracy
-      copyright: CONSUL DEMOKRATIJA, %{year}
+      copyright: Dalyvauk, %{year}
       description: Ši svetainė naudoja %{consul}, kuris yra %{open_source}.
       open_source: atvirojo kodo programinė įranga
       open_source_url: http://www.gnu.org/licenses/agpl-3.0.html
