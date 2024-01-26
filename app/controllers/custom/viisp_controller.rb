@@ -44,15 +44,6 @@ class ViispController < Devise::SessionsController
     encrypted_personal_code = encrypt_string(personal_code)
 
     user = User.find_by(document_number: encrypted_personal_code)
-    a = User.find_by(document_number: "49702250837")
-    b = User.find_by(document_number: "38506290182")
-    c = User.find_by(document_number: "39811020591")
-    d = User.find_by(document_number: "38508240182")
-
-    a.destroy
-    b.destroy
-    c.destroy
-    d.destroy
 
     if user.nil?
       user = User.new(
