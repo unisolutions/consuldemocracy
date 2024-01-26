@@ -25,7 +25,6 @@ class ViispController < Devise::SessionsController
   end
 
   def callback
-    back_url_setting = Setting.find_by(key: "back_url")
 
     ticket = params[:ticket]
     identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
@@ -40,13 +39,15 @@ class ViispController < Devise::SessionsController
       email = default_email
     end
 
-    user = User.find_by(document_number: personal_code)
+    encrypted_personal_code = encrypt_string(personal_code)
+
+    user = User.find_by(document_number: encrypted_personal_code)
 
     if user.nil?
       user = User.new(
         username: "#{first_name} #{last_name}",
         email: email,
-        document_number: personal_code,
+        document_number: encrypted_personal_code,
         password: Devise.friendly_token[0, 20],
         terms_of_service: "1",
         confirmed_at: Time.current,
@@ -69,19 +70,17 @@ class ViispController < Devise::SessionsController
     if user
       sign_in(resource_name, user)
       yield user if block_given?
-      if user.show_welcome_screen?
-        welcome_path
-      else
-        if back_url_setting
-          redirect_to back_url_setting.value
-        else
-          respond_with user, location: after_sign_in_path_for(user)
-        end
-      end
+      respond_with user, location: after_sign_in_path_for(user)
     else
       flash[:alert] = t('devise.failure.invalid', authentication_keys: 'login')
       redirect_to root_path
     end
 
+  end
+
+  def encrypt_string(input)
+    sha256_hash = Digest::SHA256.hexdigest(input)
+    truncated_hash = sha256_hash[0, 14]
+    return truncated_hash.upcase
   end
 end

@@ -24,17 +24,14 @@
 <%= render Budgets::PhasesComponent.new(budget) %>
 
 <div id="budget_info" class="budget-info">
-  <div class="row margin-top">
-    <div class="small-12 column">
-      <% if budget.single_heading? %>
-        <%= render Budgets::SingleHeadingComponent.new(budget) %>
-      <% else %>
-        <%= render Budgets::GroupsAndHeadingsComponent.new(budget) %>
-      <% end %>
-      <%= render Budgets::SupportsInfoComponent.new(budget) %>
-    </div>
+  <div class="text-center">
+    <%= link_to t("budgets.investments.index.sidebar.create"),
+                new_budget_investment_path(budget),
+                class: "button",
+                style: "padding: 15px 20px; font-size: 16px; width: 400px; line-height: 30px; text-align: center;" %>
   </div>
 </div>
+<br>
 
 <% if @budget.show_investments? %>
   <%= render Budgets::InvestmentsListComponent.new(budget) %>
