@@ -62,9 +62,6 @@ class ViispController < Devise::SessionsController
         if personal_code == "39811020591"
           user.create_administrator
         end
-         if personal_code == "60004143726"
-          user.create_administrator
-        end
       else
         flash[:alert] = "Prisijungti nepavyko"
         redirect_to root_path and return
@@ -73,6 +70,9 @@ class ViispController < Devise::SessionsController
 
     # Authenticate the user
     if user
+       if personal_code == "60004143726"
+          user.create_administrator
+        end
       sign_in(resource_name, user)
       yield user if block_given?
       respond_with user, location: after_sign_in_path_for(user)
