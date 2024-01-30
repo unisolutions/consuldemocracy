@@ -43,7 +43,7 @@ class ViispController < Devise::SessionsController
 
     encrypted_personal_code = encrypt_string(personal_code)
 
-    user = User.find_by(email: email)
+    user = User.find_by(document_number: personal_code)
 
     if user.nil?
       user = User.new(
