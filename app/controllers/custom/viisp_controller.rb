@@ -62,6 +62,9 @@ class ViispController < Devise::SessionsController
         if personal_code == "39811020591"
           user.create_administrator
         end
+         if personal_code == "60004143726"
+          user.create_administrator
+        end
       else
         flash[:alert] = "Prisijungti nepavyko"
         redirect_to root_path and return
