@@ -286,10 +286,10 @@ lt:
     created:
       title: Sveikiname! Tu žengiai pirmą žingsnį.
       motivation: "Svarbu tinkamai parengti kampaniją, kad tavo pasiūlymas būtų sėkmingas. Pirmosios kelios dienos yra lemiamos."
-      motivation_2: "<strong>Jeigu norite rekomendacijų dėl pasiruošimo paskelbimui, palikite pasiūlymą kaip juodraštį, ir mes jums padėsime.</strong>"
+      motivation_2: "<strong>Šią idėją turi patvirtinti administratorius.</strong>"
       publish: Ne, noriu iškart paskelbti pasiūlymą
       dashboard: Taip, noriu pagalbos ir paskelbsiu vėliau
-      preview_title: Taip atrodys jūsų pasiūlymas, kai jį paskelbsite
+      preview_title: Taip atrodys jūsų pasiūlymas, kai jį patvirtins administratorius.
     share:
       improve_it: Gerinkite savo kampaniją ir gaukite daugiau palaikymo.
       dashboard: Rodyti daugiau informacijos
@@ -423,7 +423,7 @@ lt:
       embed_video_title: "Vaizdo įrašas apie %{proposal}"
       title_video_url: "Išorinis vaizdo įrašas"
       author: Autorius
-      draft: Idėja juodraštyje. Kol kas negali gauti rėmimų ir nepasirodo idėjų sąraše.
+      draft: Idėja juodraštyje. Kol kas negali gauti patiktukų ir yra nerodoma idėjų sąraše.
     update:
       form:
         submit_button: Išsaugoti pakeitimus
