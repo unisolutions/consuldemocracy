@@ -43,6 +43,8 @@ Rails.application.routes.draw do
   get "help/how-to-use",  to: "pages#show", id: "help/how_to_use/index",  as: "how_to_use"
   get "help/faq",         to: "pages#show", id: "faq",                    as: "faq"
 
+  # get "/investments/update_heading_options", to: "investments#update_heading_options"
+
   # Static pages
   resources :pages, path: "/", only: [:show]
 

@@ -24,14 +24,16 @@
 <%= render Budgets::PhasesComponent.new(budget) %>
 
 
-<div id="budget_info" class="budget-info" style="padding: 24px;">
-  <div class="text-center">
-    <%= link_to t("budgets.investments.index.sidebar.create"),
-                new_budget_investment_path(budget),
-                class: "button",
-                style: "font-size: 24px;" %>
+<% if budget.accepting? %>
+  <div id="budget_info" class="budget-info" style="padding: 24px;">
+    <div class="text-center">
+      <%= link_to t("budgets.investments.index.sidebar.create"),
+                  new_budget_investment_path(budget),
+                  class: "button",
+                  style: "font-size: 24px;" %>
+    </div>
   </div>
-</div>
+<% end %>
 
 
 <% if @budget.show_investments? %>

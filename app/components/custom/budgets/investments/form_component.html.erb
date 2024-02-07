@@ -1,17 +1,41 @@
-<%= translatable_form_for(investment, url: url, html: { class: "budget-investment-form" }) do |f| %>
 
+<%= translatable_form_for(investment, url: url, html: { class: "budget-investment-form" }) do |f| %>
   <%= render "shared/errors", resource: investment %>
 
   <fieldset class="required-fields">
     <legend><%= t("shared.required") %></legend>
 
     <% unless budget.single_heading? %>
+
       <div>
         <%= f.select :heading_id,
                      budget_heading_select_options(budget),
                      label: "Projekto idėjos kategorija"
-                      %>
+        %>
       </div>
+
+
+      <% if false %>
+        <div>
+          <%= f.select :group_id,
+                       group_select_options(budget),
+                       label: "Projekto idėjos grupė",
+                       class: "group-dropdown",
+                       id: "group-id-dropdown"
+          %>
+        </div>
+
+        <div>
+          <%= f.select :heading_id,
+                       budget_heading_select_options(budget),
+                       label: "Projekto idėjos kategorija",
+                       class: "heading-dropdown",
+                       id: "heading-id-dropdown"
+          %>
+        </div>
+      <% end %>
+
+
     <% end %>
 
     <div>

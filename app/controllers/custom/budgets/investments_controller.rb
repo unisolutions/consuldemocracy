@@ -38,6 +38,22 @@ module Budgets
     helper_method :resource_model, :resource_name
     respond_to :html, :js
 
+    # helper method to generate dynamic dropdown in investment form
+=begin
+    def update_heading_options
+      group_id = params[:group_id]
+      # Logic to fetch heading options based on the selected group_id
+      headings = @budget.headings.includes(:group).sort_by(&:name)
+
+      if group_id.present?
+        headings = headings.select { |heading| heading.group.id == group_id.to_i }
+      end
+
+      options = headings.map { |heading| [heading.name, heading.id] }
+
+      render json: { options: options }
+    end
+=end
     def index
       @investments = investments.page(params[:page]).per(PER_PAGE).for_render
       @investment_ids = @investments.ids
@@ -88,8 +104,8 @@ module Budgets
 
     def suggest
       @resource_path_method = :namespaced_budget_investment_path
-      @resource_relation    = resource_model.where(budget: @budget)
-                                            .apply_filters_and_search(@budget, params, @current_filter)
+      @resource_relation = resource_model.where(budget: @budget)
+                                         .apply_filters_and_search(@budget, params, @current_filter)
       super
     end
 
@@ -115,7 +131,7 @@ module Budgets
 
     def allowed_params
       attributes = [:heading_id, :tag_list, :organization_name, :location,
-                    :terms_of_service, :plan_accepted,  :related_sdg_list,
+                    :terms_of_service, :plan_accepted, :related_sdg_list,
                     image_attributes: image_attributes,
                     documents_attributes: document_attributes,
                     map_location_attributes: map_location_attributes]
