@@ -1,4 +1,3 @@
-
 <%= translatable_form_for(investment, url: url, html: { class: "budget-investment-form" }) do |f| %>
   <%= render "shared/errors", resource: investment %>
 
@@ -7,34 +6,28 @@
 
     <% unless budget.single_heading? %>
 
+
       <div>
-        <%= f.select :heading_id,
-                     budget_heading_select_options(budget),
-                     label: "Projekto idėjos kategorija"
+        <%= f.select :group_id,
+                     group_select_options(budget),
+                     label: "Projekto idėjos grupė",
+                     class: "group-dropdown",
+                     id: "group-id-dropdown"
         %>
       </div>
 
 
-      <% if false %>
-        <div>
-          <%= f.select :group_id,
-                       group_select_options(budget),
-                       label: "Projekto idėjos grupė",
-                       class: "group-dropdown",
-                       id: "group-id-dropdown"
-          %>
-        </div>
-
+      <% if budget.headings.size > 0 %>
         <div>
           <%= f.select :heading_id,
                        budget_heading_select_options(budget),
                        label: "Projekto idėjos kategorija",
                        class: "heading-dropdown",
                        id: "heading-id-dropdown"
+
           %>
         </div>
       <% end %>
-
 
     <% end %>
 
@@ -142,3 +135,33 @@
 
 
 <% end %>
+
+
+<script>
+  $(document).ready(function () {
+    console.log('sadsadsad');
+    // Select the #mySelect element and attach a change event handler
+    $('#budget_investment_group_id').on('change', function () {
+      // Show an alert with the selected value
+      var group_id = $(this).val();
+      $.ajax({
+        url: 'dropdown/update_heading_options/',
+        type: 'GET',
+        dataType: 'json',
+        data: {group_id: group_id},
+        success: function (data) {
+          // Update the options in the second dropdown
+          var optionsHtml = data.options.map(function (option) {
+            return '<option value="' + option[1] + '">' + option[0] + '</option>';
+          }).join('');
+
+          $('#budget_investment_heading_id').html(optionsHtml);
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+        }
+      });
+
+    });
+  });
+</script>

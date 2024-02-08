@@ -38,22 +38,6 @@ module Budgets
     helper_method :resource_model, :resource_name
     respond_to :html, :js
 
-    # helper method to generate dynamic dropdown in investment form
-=begin
-    def update_heading_options
-      group_id = params[:group_id]
-      # Logic to fetch heading options based on the selected group_id
-      headings = @budget.headings.includes(:group).sort_by(&:name)
-
-      if group_id.present?
-        headings = headings.select { |heading| heading.group.id == group_id.to_i }
-      end
-
-      options = headings.map { |heading| [heading.name, heading.id] }
-
-      render json: { options: options }
-    end
-=end
     def index
       @investments = investments.page(params[:page]).per(PER_PAGE).for_render
       @investment_ids = @investments.ids
