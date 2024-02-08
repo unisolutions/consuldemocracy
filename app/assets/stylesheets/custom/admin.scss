@@ -895,7 +895,15 @@ table {
 
 .map {
   width: 100%;
-  height: 600px;
+
+  @media (min-width: 600px) {
+    height: 600px;
+  }
+
+  @media (min-width: 1024px) {
+    height: 800px;
+  }
+
 
   .map-marker {
     visibility: visible;
