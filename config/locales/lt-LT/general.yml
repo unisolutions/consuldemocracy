@@ -389,7 +389,7 @@ lt:
         edit: "Kol ji dar nėra bendrinamas, galėsite pakeisti tekstą kaip norite."
         view_proposal: "Ne dabar, eiti į mano idėją"
       already_supported: "Jūs išreiškėte palaikymą šiai idėjai."
-      support: Remti
+      support: Patinka
       undo_support: Nepatinka
       support_label: "Remti %{proposal}"
       support_title: Remti šią idėją
