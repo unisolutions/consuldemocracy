@@ -93,7 +93,7 @@ lt:
         recommendations: Rekomendacijos
       recommendations:
         without_results: Nėra diskusijų, susijusių su jūsų interesais
-        without_interests: Sekite pasiūlymus, kad galėtume jums suteikti rekomendacijas
+        without_interests: " "
         disable: "Jei atmesite rekomendacijas diskusijoms, jos daugiau nebus rodomos. Jūs galėsite įjungti jas vėl puslapio „Mano paskyra“ skiltyje"
         actions:
           success: "Rekomendacijos diskusijoms šiai paskyrai dabar išjungtos"
