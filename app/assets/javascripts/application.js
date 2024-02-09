@@ -125,6 +125,7 @@
 //= require_tree ./admin
 //= require_tree ./sdg
 //= require_tree ./sdg_management
+//= require custom
 //= require_tree ./custom
 
 var initialize_modules = function() {
