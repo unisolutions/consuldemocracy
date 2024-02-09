@@ -7,7 +7,7 @@ class ViispController < Devise::SessionsController
   def authenticate
 
     VIISP::Auth.configure do |c|
-      c.pid = 'VSID000000005850'
+      c.pid = 'VSID000000005850' #VSID000000000113
       c.private_key = OpenSSL::PKey::RSA.new(File.read('./config/keys/dalyvauk-private.pem'))
       c.postback_url = 'https://dalyvauk.krs.lt/viisp/callback'
 
@@ -70,9 +70,6 @@ class ViispController < Devise::SessionsController
 
     # Authenticate the user
     if user
-       if personal_code == "60004143726"
-          user.create_administrator
-        end
       sign_in(resource_name, user)
       yield user if block_given?
       respond_with user, location: after_sign_in_path_for(user)
@@ -90,6 +87,5 @@ class ViispController < Devise::SessionsController
   end
 
 end
-
 
 

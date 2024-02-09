@@ -19,15 +19,15 @@ devise_scope :user do
   get '/viisp/callback', to: 'viisp#callback'
 
   post '/users/handle', to: 'users/sessions#handle'
-
 end
 
+
 devise_for :organizations, class_name: "User",
-                           controllers: {
-                             registrations: "organizations/registrations",
-                             sessions: "devise/sessions"
-                           },
-                           skip: [:omniauth_callbacks]
+           controllers: {
+             registrations: "organizations/registrations",
+             sessions: "devise/sessions"
+           },
+           skip: [:omniauth_callbacks]
 
 devise_scope :organization do
   get "organizations/sign_up/success", to: "organizations/registrations#success"
