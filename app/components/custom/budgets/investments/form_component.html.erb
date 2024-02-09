@@ -10,7 +10,7 @@
       <div>
         <%= f.select :group_id,
                      group_select_options(budget),
-                     label: "Projekto idėjos grupė",
+                     label: "Projekto idėjos kategorija",
                      class: "group-dropdown",
                      id: "group-id-dropdown"
         %>
@@ -21,7 +21,7 @@
         <div>
           <%= f.select :heading_id,
                        budget_heading_select_options(budget),
-                       label: "Projekto idėjos kategorija",
+                       label: "Viešoji erdvė",
                        class: "heading-dropdown",
                        id: "heading-id-dropdown"
 
@@ -119,7 +119,7 @@
     <% unless current_user.manager? || investment.persisted? %>
       <%= f.check_box :plan_accepted,
                       title: "Naudos atitikimas",
-                      label: "Projekto idėjos rezultatai, jų nauda, atitinka #{link_to('Kauno rajono savivaldybės 2023-2025 m. strateginio veiklos plano', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')}, „Investicijų į kaimo plėtra užtikrinimas“." %>
+                      label: "Projekto idėjos rezultatai, jų nauda, atitinka bent vieną #{link_to('Kauno rajono savivaldybės 2024-2026 m. strateginio veiklos', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')}, plano 4 programos tikslą." %>
       <div style="display: flex; align-items: center; margin-bottom: 10px;">
         <%= f.check_box :terms_of_service,
                         title: t("form.accept_terms_title"),
