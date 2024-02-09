@@ -96,10 +96,10 @@ class ProposalsController < ApplicationController
     end
   end
 
-  def publish
-    @proposal.publish
-    redirect_to share_proposal_path(@proposal), notice: t("proposals.notice.published")
-  end
+  # def publish
+  #   @proposal.publish
+  #   redirect_to share_proposal_path(@proposal), notice: t("proposals.notice.published")
+  # end
 
   private
 

@@ -1,0 +1,9 @@
+<ul id="proposal_dashboard_menu" class="no-bullet">
+  <li class="section-title <%= "is-active" if my_proposal_menu_active? %>">
+    <span class="icon-proposals"></span>
+    <%= link_to proposal_dashboard_path(proposal.to_param) do %>
+      <strong><%= t("dashboard.menu.my_proposal") %></strong>
+    <% end %>
+  </li>
+
+</ul>

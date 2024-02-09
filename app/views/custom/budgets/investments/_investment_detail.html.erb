@@ -24,6 +24,12 @@
   <%= sanitize(t("budgets.investments.show.code", code: investment.id)) %>
 </p>
 
+<% if investment.location.present? %>
+  <p>
+    <%= sanitize(t("budgets.investments.show.location", location: investment.location)) %>
+  </p>
+<% end %>
+
 <%= auto_link_already_sanitized_html wysiwyg(investment.description) %>
 
 <%#= investment.preliminary_price.nil? ? 'No price' : investment.preliminary_price %>
@@ -32,12 +38,6 @@
   <div class="margin">
     <%= render_map(investment.map_location) %>
   </div>
-<% end %>
-
-<% if investment.location.present? %>
-  <p>
-    <%= sanitize(t("budgets.investments.show.location", location: investment.location)) %>
-  </p>
 <% end %>
 
 <% if investment.organization_name.present? %>
