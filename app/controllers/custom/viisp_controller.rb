@@ -7,9 +7,9 @@ class ViispController < Devise::SessionsController
   def authenticate
 
     VIISP::Auth.configure do |c|
-      c.pid = 'VSID000000000113' #VSID000000000113
-      c.private_key = OpenSSL::PKey::RSA.new(File.read('./config/keys/testKey.pem'))
-      c.postback_url = 'http://212.24.109.28:3000/viisp/callback'
+      c.pid = Rails.configuration.viisp_pid
+      c.private_key = OpenSSL::PKey::RSA.new(File.read(Rails.configuration.viisp_key_route))
+      c.postback_url = Rails.configuration.base_url + '/viisp/callback'
 
       # optional
       c.providers = %w[auth.lt.identity.card auth.lt.bank]
@@ -18,7 +18,7 @@ class ViispController < Devise::SessionsController
 
       # enable test mode
       # (in test mode there is no need to set pid and private_key)
-      c.test = true # Rails.env.test? # Adjust this condition based on your environment
+      c.test = Rails.configuration.viisp_test # Rails.env.test? # Adjust this condition based on your environment
     end
 
     ticket = VIISP::Auth.ticket

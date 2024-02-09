@@ -3,6 +3,11 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
+  #viisp configuration
+  config.viisp_pid = 'VSID000000000113'
+  config.viisp_key_route = './config/keys/testKey.pem'
+  config.base_url = 'http://212.24.109.28:3000'
+  config.viisp_test = true
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
