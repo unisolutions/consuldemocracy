@@ -115,7 +115,7 @@
     <% unless current_user.manager? || investment.persisted? %>
       <%= f.check_box :plan_accepted,
                       title: "Naudos atitikimas",
-                      label: "Projekto idėjos rezultatai, jų nauda, atitinka bent vieną #{link_to('Kauno rajono savivaldybės 2023-2025 m. strateginio veiklos', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')} plano 4 programos tikslą." %>
+                      label: "Projekto idėjos rezultatai, jų nauda, atitinka bent vieną #{link_to('Kauno rajono savivaldybės 2023-2025 m. strateginio veiklos', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')} plano 4 programos tikslą" %>
       <div style="display: flex; align-items: center; margin-bottom: 10px;">
         <%= f.check_box :terms_of_service,
                         title: t("form.accept_terms_title"),
