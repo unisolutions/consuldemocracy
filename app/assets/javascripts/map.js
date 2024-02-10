@@ -209,47 +209,8 @@
       if (geozones) {
         geozones.forEach(function(geozone) {
           App.Map.addGeozone(geozone, map);
-          App.Map.addMarkerAtCenter(geozone, map);
-
         });
       }
-    },
-    addMarkerAtCenter: function(geozone, map) {
-      // Calculate the center of the geozone polygon
-      var centerLatLng = App.Map.calculatePolygonCenter(geozone.outline_points);
-      // Create a marker at the center and add it to the map
-      var marker = L.marker(centerLatLng, {
-        icon: L.divIcon({
-          className: "map-marker",
-          iconSize: [30, 30],
-          iconAnchor: [15, 40],
-          html: '<div class="map-icon"></div>'
-        })
-      });
-      if (geozone.headings !== undefined) {
-        marker.bindPopup(geozone.headings.join("<br>"));
-      }
-
-      marker.addTo(map);
-    },
-
-    calculatePolygonCenter: function(points) {
-      // Calculate the centroid (center) of a polygon
-      var totalPoints = points.length;
-      var totalLat = 0;
-      var totalLng = 0;
-
-      // Sum up all the coordinates
-      points.forEach(function(point) {
-        totalLat += point[0];
-        totalLng += point[1];
-      });
-
-      // Calculate the average to find the center
-      var centerLat = totalLat / totalPoints;
-      var centerLng = totalLng / totalPoints;
-
-      return new L.LatLng(centerLat, centerLng);
     },
     addGeozone: function(geozone, map) {
       var polygon = L.polygon(geozone.outline_points, {
