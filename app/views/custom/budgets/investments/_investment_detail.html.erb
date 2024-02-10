@@ -23,7 +23,7 @@
 <p id="investment_code">
   <%= sanitize(t("budgets.investments.show.code", code: investment.id)) %>
 </p>
-
+<hr>
 <% if investment.location.present? %>
   <p>
     <%= sanitize(t("budgets.investments.show.location", location: investment.location)) %>

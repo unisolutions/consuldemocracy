@@ -5,11 +5,10 @@ class ViispController < Devise::SessionsController
   skip_before_action :verify_authenticity_token
 
   def authenticate
-
     VIISP::Auth.configure do |c|
       c.pid = Rails.configuration.viisp_pid
       c.private_key = OpenSSL::PKey::RSA.new(File.read(Rails.configuration.viisp_key_route))
-      c.postback_url = "http://localhost:3000" + '/viisp/callback' #Rails.configuration.base_url
+      c.postback_url = "http://localhost:3000" + '/viisp/callback' # Rails.configuration.base_url
 
       # optional
       c.providers = %w[auth.lt.identity.card auth.lt.bank]
@@ -21,16 +20,17 @@ class ViispController < Devise::SessionsController
       c.test = Rails.configuration.viisp_test # Rails.env.test? # Adjust this condition based on your environment
     end
 
-    ticket = VIISP::Auth.ticket
+    ticket = VIISP::Auth.ticket(
+      custom_data: cookies[:test]
+    )
 
     redirect_to "#{VIISP::Auth.portal_endpoint}?ticket=#{ticket}"
   end
 
   def callback
-
     ticket = params[:ticket]
     identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
-
+    back_url = identity["custom_data"]
     personal_code = identity["attributes"]["lt-personal-code"]
     first_name = identity["user_information"]["firstName"]
     last_name = identity["user_information"]["lastName"]
@@ -72,7 +72,8 @@ class ViispController < Devise::SessionsController
     if user
       sign_in(resource_name, user)
       yield user if block_given?
-      respond_with user, location: after_sign_in_path_for(user)
+      # respond_with user, location: after_sign_in_path_for(user)
+      redirect_to back_url || root_path
     else
       flash[:alert] = t('devise.failure.invalid', authentication_keys: 'login')
       redirect_to root_path

@@ -5,6 +5,9 @@ class Users::SessionsController < Devise::SessionsController
   skip_before_action :verify_authenticity_token
 
   def new
+    if request.referrer != nil && !request.referrer.include?("/users/sign_in")
+      cookies[:test] = request.referrer
+    end
     redirect_to viisp_authenticate_path
   end
 
