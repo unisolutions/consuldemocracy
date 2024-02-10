@@ -23,6 +23,7 @@
           <div class="small-12 medium-10">
             <%= f.text_field :username, maxlength: User.username_max_length, readonly: true %>
             <%= f.email_field :email %>
+            <%= f.telephone_field :phone_number, maxlength: 12, placeholder: "+370XXXXXXXX" %>
           </div>
 
 
