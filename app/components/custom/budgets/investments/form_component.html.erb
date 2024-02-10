@@ -6,7 +6,6 @@
 
     <% unless budget.single_heading? %>
 
-
       <div>
         <%= f.select :group_id,
                      group_select_options(budget),
@@ -62,7 +61,6 @@
 
   <fieldset>
     <legend><%= t("shared.optional") %></legend>
-
     <% if feature?(:allow_images) %>
       <%= render Images::NestedComponent.new(f) %>
     <% end %>
@@ -71,6 +69,14 @@
       <div class="documents">
         <%= render Documents::NestedComponent.new(f) %>
       </div>
+    <% end %>
+
+    <% if !current_user.email.present? || current_user.email == "noemail@krs.lt"  %>
+      <%= f.email_field :user_email, value: current_user.email, label: "Teikėjo el. paštas" %>
+    <% end %>
+
+    <% unless current_user.phone_number.present? %>
+      <%= f.telephone_field :user_phone_number, maxlength: 12, placeholder: "+370XXXXXXXX", value: current_user.phone_number, label: "Teikėjo tel. numeris" %>
     <% end %>
 
     <% if false %>
