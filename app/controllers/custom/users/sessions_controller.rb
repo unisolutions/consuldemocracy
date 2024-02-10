@@ -6,7 +6,7 @@ class Users::SessionsController < Devise::SessionsController
 
   def new
     if request.referrer != nil && !request.referrer.include?("/users/sign_in")
-      cookies[:test] = request.referrer
+      cookies[:back_url] = request.referrer
     end
     redirect_to viisp_authenticate_path
   end

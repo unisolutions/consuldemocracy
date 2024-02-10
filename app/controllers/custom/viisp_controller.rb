@@ -21,7 +21,7 @@ class ViispController < Devise::SessionsController
     end
 
     ticket = VIISP::Auth.ticket(
-      custom_data: cookies[:test]
+      custom_data: cookies[:back_url]
     )
 
     redirect_to "#{VIISP::Auth.portal_endpoint}?ticket=#{ticket}"
