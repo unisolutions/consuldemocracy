@@ -8,7 +8,7 @@ class ViispController < Devise::SessionsController
     VIISP::Auth.configure do |c|
       c.pid = Rails.configuration.viisp_pid
       c.private_key = OpenSSL::PKey::RSA.new(File.read(Rails.configuration.viisp_key_route))
-      c.postback_url = "http://localhost:3000" + '/viisp/callback' # Rails.configuration.base_url
+      c.postback_url = Rails.configuration.base_url + '/viisp/callback' # Rails.configuration.base_url
 
       # optional
       c.providers = %w[auth.lt.identity.card auth.lt.bank]
