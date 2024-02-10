@@ -226,6 +226,9 @@
           html: '<div class="map-icon"></div>'
         })
       });
+      if (geozone.headings !== undefined) {
+        marker.bindPopup(geozone.headings.join("<br>"));
+      }
 
       marker.addTo(map);
     },
