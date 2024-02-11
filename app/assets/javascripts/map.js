@@ -253,9 +253,6 @@
       var centerLat = totalLat / totalPoints;
       var centerLng = totalLng / totalPoints;
 
-      console.log(centerLat + "lat")
-      console.log(centerLng + "LNG")
-
       return new L.LatLng(centerLat, centerLng);
     },
     addGeozone: function(geozone, map) {
