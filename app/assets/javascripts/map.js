@@ -209,8 +209,54 @@
       if (geozones) {
         geozones.forEach(function(geozone) {
           App.Map.addGeozone(geozone, map);
+          App.Map.addMarkerAtCenter(geozone, map);
+
         });
       }
+    },
+    addMarkerAtCenter: function(geozone, map) {
+      if (!geozone || !geozone.outline_points || geozone.outline_points.length <= 3) {
+        return;
+      }
+      var centerLatLng = App.Map.calculatePolygonCenter(geozone.outline_points);
+
+      if (!centerLatLng) {
+        return;
+      }
+      var marker = L.marker(centerLatLng, {
+        icon: L.divIcon({
+          className: "map-marker",
+          iconSize: [30, 30],
+          iconAnchor: [15, 40],
+          html: '<div class="map-icon"></div>'
+        })
+      });
+
+      if (geozone.headings !== undefined) {
+        marker.bindPopup(geozone.headings.join("<br>"));
+      }
+
+      marker.addTo(map);
+    },
+
+
+    calculatePolygonCenter: function(points) {
+      var totalPoints = points.length;
+      var totalLat = 0;
+      var totalLng = 0;
+
+      points.forEach(function(point) {
+        totalLat += point[0];
+        totalLng += point[1];
+      });
+
+      var centerLat = totalLat / totalPoints;
+      var centerLng = totalLng / totalPoints;
+
+      console.log(centerLat + "lat")
+      console.log(centerLng + "LNG")
+
+      return new L.LatLng(centerLat, centerLng);
     },
     addGeozone: function(geozone, map) {
       var polygon = L.polygon(geozone.outline_points, {
