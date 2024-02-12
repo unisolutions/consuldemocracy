@@ -9,10 +9,11 @@ class ProposalsController < ApplicationController
 
   before_action :load_categories, only: [:index, :map, :summary]
   before_action :load_geozones, only: [:edit, :map, :summary]
-  before_action :authenticate_user!, except: [:index, :show, :map, :summary]
+  before_action :authenticate_user!, except: [:create, :created, :new, :index, :show, :map, :summary]
   before_action :set_view, only: :index
   before_action :proposals_recommendations, only: :index, if: :current_user
 
+  skip_authorization_check only: [:create]
   feature_flag :proposals
 
   invisible_captcha only: [:create, :update], honeypot: :subtitle
@@ -20,7 +21,7 @@ class ProposalsController < ApplicationController
   has_orders ->(c) { Proposal.proposals_orders(c.current_user) }, only: :index
   has_orders %w[most_voted newest oldest], only: :show
 
-  load_and_authorize_resource
+  load_and_authorize_resource except: [:create]
   before_action :destroy_map_location_association, only: :update
 
   helper_method :resource_model, :resource_name
@@ -37,7 +38,22 @@ class ProposalsController < ApplicationController
   end
 
   def create
-    @proposal = Proposal.new(proposal_params.merge(author: current_user))
+    if current_user
+      @proposal = Proposal.new(proposal_params.merge(author: current_user))
+    else
+      user = User.find_by(email: 'simonas.sniokaa@gmail.com')
+
+      if user
+        @proposal = Proposal.new(proposal_params.merge(author: user))
+      else
+        # Handle the case when the user is not found by email
+        # You can choose to render an error message or redirect as per your requirement
+        # For example, you might want to redirect to the login page or show an error message
+        flash[:error] = "Ups! Sukurti idėjos nepavyko"
+        redirect_to root_path and return
+      end
+    end
+
     if @proposal.save
       redirect_to created_proposal_path(@proposal), notice: I18n.t("flash.actions.create.proposal")
     else

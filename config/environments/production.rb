@@ -2,13 +2,6 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-
-  #viisp configuration
-  config.viisp_pid = 'VSID000000005850'
-  config.viisp_key_route = './config/keys/dalyvauk-private.pem'
-  config.base_url = 'https://dalyvauk.krs.lt'
-  config.viisp_test = false
-
   # Code is not reloaded between requests.
   config.cache_classes = true
 

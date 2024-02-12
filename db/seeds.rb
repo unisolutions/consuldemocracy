@@ -4,6 +4,10 @@ if Administrator.count == 0 && (!Rails.env.test? || !Tenant.default?)
                        password_confirmation: "12345678", confirmed_at: Time.current,
                        terms_of_service: "1")
   admin.create_administrator
+
+  User.create!(username: "Anonimas", email: "X@X.X", password: Rails.configuration.anonymous_credentials,
+               password_confirmation: Rails.configuration.anonymous_credentials, document_number: Rails.configuration.anonymous_credentials, confirmed_at: Time.current,
+               terms_of_service: "1")
 end
 
 Setting.reset_defaults
