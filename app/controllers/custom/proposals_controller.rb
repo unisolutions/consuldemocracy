@@ -41,7 +41,7 @@ class ProposalsController < ApplicationController
     if current_user
       @proposal = Proposal.new(proposal_params.merge(author: current_user))
     else
-      user = User.find_by(document_number: Rails.configuration.anonymous_credentials)
+      user = find_or_create_anonymous_user
       if user
         @proposal = Proposal.new(proposal_params.merge(author: user))
       else
@@ -114,6 +114,24 @@ class ProposalsController < ApplicationController
   # end
 
   private
+
+  def find_or_create_anonymous_user
+    user = User.find_by(document_number: Rails.configuration.anonymous_credentials)
+    user ||= create_anonymous_user if user.nil?
+    user
+  end
+
+  def create_anonymous_user
+    User.create!(
+      username: "Anonimas",
+      email: "X@X.X",
+      password: Rails.configuration.anonymous_credentials,
+      password_confirmation: Rails.configuration.anonymous_credentials,
+      document_number: Rails.configuration.anonymous_credentials,
+      confirmed_at: Time.current,
+      terms_of_service: "1"
+    )
+  end
 
   def proposal_params
     params.require(:proposal).permit(allowed_params)
