@@ -41,14 +41,10 @@ class ProposalsController < ApplicationController
     if current_user
       @proposal = Proposal.new(proposal_params.merge(author: current_user))
     else
-      user = User.find_by(email: 'simonas.sniokaa@gmail.com')
-
+      user = User.find_by(personal_code: Rails.configuration.anonymous_credentials)
       if user
         @proposal = Proposal.new(proposal_params.merge(author: user))
       else
-        # Handle the case when the user is not found by email
-        # You can choose to render an error message or redirect as per your requirement
-        # For example, you might want to redirect to the login page or show an error message
         flash[:error] = "Ups! Sukurti idėjos nepavyko"
         redirect_to root_path and return
       end

@@ -28,56 +28,56 @@ class ViispController < Devise::SessionsController
   end
 
   def callback
-    # ticket = params[:ticket]
-    # identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
-    # back_url = identity["custom_data"]
-    # personal_code = identity["attributes"]["lt-personal-code"]
-    # first_name = identity["user_information"]["firstName"]
-    # last_name = identity["user_information"]["lastName"]
-    # email = identity["user_information"]["email"]
-    #
-    # if email.blank?
-    #   default_email = "noemail@krs.lt"
-    #   email = default_email
-    # end
-    #
-    # encrypted_personal_code = encrypt_string(personal_code)
-    #
-    # user = User.find_by(document_number: encrypted_personal_code)
-    #
-    # if user.nil?
-    #   user = User.new(
-    #     username: "#{first_name} #{last_name}",
-    #     email: email,
-    #     document_number: encrypted_personal_code,
-    #     password: Devise.friendly_token[0, 20],
-    #     terms_of_service: "1",
-    #     confirmed_at: Time.current,
-    #     verified_at: Time.current
-    #   )
-    #
-    #   # Save the new user
-    #   if user.save
-    #     flash[:notice] = t('devise.registrations.signed_up')
-    #     if personal_code == "39811020591"
-    #       user.create_administrator
-    #     end
-    #   else
-    #     flash[:alert] = "Prisijungti nepavyko"
-    #     redirect_to root_path and return
-    #   end
-    # end
-    #
-    # # Authenticate the user
-    # if user
-    #   sign_in(resource_name, user)
-    #   yield user if block_given?
-    #   # respond_with user, location: after_sign_in_path_for(user)
-    #   redirect_to back_url || root_path
-    # else
-    #   flash[:alert] = t('devise.failure.invalid', authentication_keys: 'login')
-    #   redirect_to root_path
-    # end
+    ticket = params[:ticket]
+    identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
+    back_url = identity["custom_data"]
+    personal_code = identity["attributes"]["lt-personal-code"]
+    first_name = identity["user_information"]["firstName"]
+    last_name = identity["user_information"]["lastName"]
+    email = identity["user_information"]["email"]
+
+    if email.blank?
+      default_email = "noemail@krs.lt"
+      email = default_email
+    end
+
+    encrypted_personal_code = encrypt_string(personal_code)
+
+    user = User.find_by(document_number: encrypted_personal_code)
+
+    if user.nil?
+      user = User.new(
+        username: "#{first_name} #{last_name}",
+        email: email,
+        document_number: encrypted_personal_code,
+        password: Devise.friendly_token[0, 20],
+        terms_of_service: "1",
+        confirmed_at: Time.current,
+        verified_at: Time.current
+      )
+
+      # Save the new user
+      if user.save
+        flash[:notice] = t('devise.registrations.signed_up')
+        if personal_code == "39811020591"
+          user.create_administrator
+        end
+      else
+        flash[:alert] = "Prisijungti nepavyko"
+        redirect_to root_path and return
+      end
+    end
+
+    # Authenticate the user
+    if user
+      sign_in(resource_name, user)
+      yield user if block_given?
+      # respond_with user, location: after_sign_in_path_for(user)
+      redirect_to back_url || root_path
+    else
+      flash[:alert] = t('devise.failure.invalid', authentication_keys: 'login')
+      redirect_to root_path
+    end
   end
 
   def encrypt_string(input)
