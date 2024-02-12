@@ -41,7 +41,7 @@ class ProposalsController < ApplicationController
     if current_user
       @proposal = Proposal.new(proposal_params.merge(author: current_user))
     else
-      user = User.find_by(personal_code: Rails.configuration.anonymous_credentials)
+      user = User.find_by(document_number: Rails.configuration.anonymous_credentials)
       if user
         @proposal = Proposal.new(proposal_params.merge(author: user))
       else
