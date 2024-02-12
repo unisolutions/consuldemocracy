@@ -5,26 +5,26 @@ class ViispController < Devise::SessionsController
   skip_before_action :verify_authenticity_token
 
   def authenticate
-    # VIISP::Auth.configure do |c|
-    #   c.pid = Rails.configuration.viisp_pid
-    #   c.private_key = OpenSSL::PKey::RSA.new(File.read(Rails.configuration.viisp_key_route))
-    #   c.postback_url = Rails.configuration.base_url + '/viisp/callback' # Rails.configuration.base_url
-    #
-    #   # optional
-    #   c.providers = %w[auth.lt.identity.card auth.lt.bank]
-    #   c.attributes = %w[lt-personal-code lt-company-code]
-    #   c.user_information = %w[firstName lastName companyName email]
-    #
-    #   # enable test mode
-    #   # (in test mode there is no need to set pid and private_key)
-    #   c.test = Rails.configuration.viisp_test # Rails.env.test? # Adjust this condition based on your environment
-    # end
-    #
-    # ticket = VIISP::Auth.ticket(
-    #   custom_data: cookies[:back_url]
-    # )
-    #
-    # redirect_to "#{VIISP::Auth.portal_endpoint}?ticket=#{ticket}"
+    VIISP::Auth.configure do |c|
+      c.pid = Rails.configuration.viisp_pid
+      c.private_key = OpenSSL::PKey::RSA.new(File.read(Rails.configuration.viisp_key_route))
+      c.postback_url = Rails.configuration.base_url + '/viisp/callback' # Rails.configuration.base_url
+
+      # optional
+      c.providers = %w[auth.lt.identity.card auth.lt.bank]
+      c.attributes = %w[lt-personal-code lt-company-code]
+      c.user_information = %w[firstName lastName companyName email]
+
+      # enable test mode
+      # (in test mode there is no need to set pid and private_key)
+      c.test = Rails.configuration.viisp_test # Rails.env.test? # Adjust this condition based on your environment
+    end
+
+    ticket = VIISP::Auth.ticket(
+      custom_data: cookies[:back_url]
+    )
+
+    redirect_to "#{VIISP::Auth.portal_endpoint}?ticket=#{ticket}"
   end
 
   def callback

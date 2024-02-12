@@ -1,7 +1,6 @@
 Rails.application.configure do
   # Overwrite settings for the production environment or add your own
   # custom settings for this environment.
-
   #Anonymous data
   config.anonymous_credentials = 'X1X2X3X4X5X6X78X'
 
