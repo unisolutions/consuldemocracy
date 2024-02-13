@@ -60,6 +60,6 @@ lt:
       not_found: "nerastas."
       not_locked: "nebuvo užrakintas."
       not_saved:
-        one: "1 klaida neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtas laukus, kad žinotumėte, kaip jas pataisyti:"
-        other: "%{count} klaidos neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtas laukus, kad žinotumėte, kaip jas pataisyti:"
+        one: "1 klaida neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtus laukus:"
+        other: "%{count} klaidos neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtus laukus"
       equal_to_current_password: "turi skirtis nuo dabartinio slaptažodžio."

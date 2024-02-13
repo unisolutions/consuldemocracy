@@ -58,7 +58,7 @@ class Budget
 
     validates_translation :title, presence: true, length: { in: 4..Budget::Investment.title_max_length }
     validates_translation :description, presence: true,
-                                        length: { maximum: Budget::Investment.description_max_length }
+                          length: { maximum: Budget::Investment.description_max_length }
     validates_translation :preliminary_price, presence: true, length: { in: 1..6 }
 
     validates :author, presence: true
@@ -67,6 +67,8 @@ class Budget
     validates :price, presence: { if: :price_required? }
     validates :terms_of_service, acceptance: { allow_nil: false }, on: :create
     validates :plan_accepted, acceptance: { allow_nil: false }, on: :create
+    validates :documents, presence: {  message: "Dokumento įkėlimas yra privalomas" }
+
 
     scope :sort_by_confidence_score, -> { reorder(confidence_score: :desc, id: :desc) }
     scope :sort_by_ballots,          -> { reorder(ballot_lines_count: :desc, id: :desc) }
@@ -399,18 +401,18 @@ class Budget
 
     private
 
-      def set_denormalized_ids
-        self.group_id = heading&.group_id if will_save_change_to_heading_id?
-        self.budget_id ||= heading&.group&.budget_id
-      end
+    def set_denormalized_ids
+      self.group_id = heading&.group_id if will_save_change_to_heading_id?
+      self.budget_id ||= heading&.group&.budget_id
+    end
 
-      def set_original_heading_id
-        self.original_heading_id = heading_id
-      end
+    def set_original_heading_id
+      self.original_heading_id = heading_id
+    end
 
-      def searchable_translations_definitions
-        { title => "A",
-          description => "D" }
-      end
+    def searchable_translations_definitions
+      { title => "A",
+        description => "D" }
+    end
   end
 end
