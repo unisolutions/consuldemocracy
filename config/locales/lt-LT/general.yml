@@ -151,7 +151,7 @@ lt:
     direct_message: privatus pranešimas
     error: klaida
     errors: klaidos
-    not_saved: "sulaikė šį %{resource} nuo įrašymo. <br>Prašome patikrinti pažymėtas laukus, kaip ištaisyti juos:"
+    not_saved: "sulaikė %{resource} nuo įrašymo. <br>Prašome patikrinti pažymėtus laukus"
     policy: Privatumo politika
     banner: baneris
     proposal: Pasiūlymas
@@ -751,7 +751,7 @@ lt:
         zero: "Naudotinos 0 kalbos"
         one: "Naudotina 1 kalba"
         other: "Naudotinos %{count} kalbos"
-    optional: "Neprivalomi laukai"
+    optional: "Rekomenduojami laukai"
     required: "Privalomi laukai"
     comments:
       one: "1 komentaras"

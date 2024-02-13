@@ -69,7 +69,7 @@
 
     </div>
 
-    <% if current_user.unverified? %>
+    <% if current_user&.unverified? %>
       <div>
         <%= f.text_field :responsible_name,
                          hint: t("proposals.form.proposal_responsible_name_note") %>

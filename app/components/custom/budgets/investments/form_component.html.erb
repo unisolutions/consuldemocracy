@@ -54,6 +54,18 @@
                                            label: "Preliminari projekto idėjos vertė <i>(Ne daugiau nei šeši skaitmenys)</i>".html_safe,
                                            class: "your-custom-class-for-styling" %>
       </div>
+      <% if feature?(:allow_attached_documents) %>
+        <div class="documents">
+          <%= render Documents::NestedComponent.new(f) %>
+          <% if @investment.errors[:documents].any? %>
+            <div class="callout alert">
+              <strong>
+                <%= @investment.errors[:documents].join(", ") %>
+              </strong>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </fieldset>
 
@@ -63,12 +75,6 @@
     <legend><%= t("shared.optional") %></legend>
     <% if feature?(:allow_images) %>
       <%= render Images::NestedComponent.new(f) %>
-    <% end %>
-
-    <% if feature?(:allow_attached_documents) %>
-      <div class="documents">
-        <%= render Documents::NestedComponent.new(f) %>
-      </div>
     <% end %>
 
     <% if !current_user.email.present? || current_user.email == "noemail@krs.lt" || !current_user.phone_number.present? %>
