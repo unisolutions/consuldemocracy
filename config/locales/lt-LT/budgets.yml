@@ -161,7 +161,7 @@ lt:
         check_ballot_link: "pateikti savo balsavimą"
         price: "Visas biudžetas"
       votes:
-        already_supported: "Jūs jau palaikėte šį investicinį projektą. Pasidalinkite juo!"
+        already_supported: "Jūs jau palaikėte šįa investicinį projektą. Pasidalinkite juo!"
         confirm_group:
           one: "Galite palaikyti investicijas tik %{count} rajone. Tęsdami negalėsite pakeisti savo rajono pasirinkimo. Ar tikrai?"
           other: "Galite palaikyti investicijas tik %{count} rajonuose. Tęsdami negalėsite pakeisti savo rajono pasirinkimo. Ar tikrai?"
