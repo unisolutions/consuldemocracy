@@ -82,7 +82,9 @@
   <div class="actions">
     <% if proposal.new_record? %>
       <div>
-        <%= render Shared::AgreeWithTermsOfServiceFieldComponent.new(f) %>
+        <%= f.check_box :terms_of_service,
+                        title: "Ideju banko taisyklaes",
+                        label: "Sutinku su #{link_to('idėjų banko taisyklėmis', 'https://dalyvauk.krs.lt/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBMQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bf90f254a2e5693de32fbb50bf20d64a2719184a/Id%C4%97j%C5%B3%20banko%20%E2%80%9EDovanok%20id%C4%97j%C4%85%E2%80%9C%20TAISYKL%C4%96S%202024.pdf', target: 'blank')}" %>
       </div>
     <% end %>
 
