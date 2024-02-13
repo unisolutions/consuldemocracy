@@ -2,7 +2,7 @@ Rails.application.configure do
   # Overwrite settings for the production environment or add your own
   # custom settings for this environment.
   #Anonymous data
-  config.anonymous_credentials = 'XXXXXXXXXXXXXXX'
+  config.anonymous_credentials = 'XXXXXXXXXXXXXX'
 
   #VIISP credentials
   config.viisp_pid = 'VSID000000005850'

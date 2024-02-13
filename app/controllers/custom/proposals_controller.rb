@@ -122,16 +122,22 @@ class ProposalsController < ApplicationController
   end
 
   def create_anonymous_user
-    User.create!(
-      username: "Anonimas",
-      email: "X@X.X",
-      password: Rails.configuration.anonymous_credentials,
-      password_confirmation: Rails.configuration.anonymous_credentials,
-      document_number: Rails.configuration.anonymous_credentials,
-      confirmed_at: Time.current,
-      terms_of_service: "1"
-    )
+    begin
+      User.create!(
+        username: "Anonimas",
+        email: "anonymous@krs.lt",
+        password: Rails.configuration.anonymous_credentials,
+        password_confirmation: Rails.configuration.anonymous_credentials,
+        document_number: Rails.configuration.anonymous_credentials,
+        confirmed_at: Time.current,
+        terms_of_service: "1"
+      )
+    rescue StandardError => e
+      Rails.logger.error("Error creating anonymous user: #{e.message}")
+      nil
+    end
   end
+
 
   def proposal_params
     params.require(:proposal).permit(allowed_params)
