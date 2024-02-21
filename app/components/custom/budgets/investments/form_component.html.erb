@@ -1,17 +1,33 @@
 <%= translatable_form_for(investment, url: url, html: { class: "budget-investment-form" }) do |f| %>
-
   <%= render "shared/errors", resource: investment %>
 
   <fieldset class="required-fields">
     <legend><%= t("shared.required") %></legend>
 
     <% unless budget.single_heading? %>
+
       <div>
-        <%= f.select :heading_id,
-                     budget_heading_select_options(budget),
-                     label: "Projekto idėjos kategorija"
-                      %>
+        <%= f.select :group_id,
+                     group_select_options(budget),
+                     label: "Projekto idėjos kategorija",
+                     class: "group-dropdown",
+                     id: "group-id-dropdown"
+        %>
       </div>
+
+
+      <% if budget.headings.size > 0 %>
+        <div>
+          <%= f.select :heading_id,
+                       budget_heading_select_options(budget),
+                       label: "Viešoji erdvė",
+                       class: "heading-dropdown",
+                       id: "heading-id-dropdown"
+
+          %>
+        </div>
+      <% end %>
+
     <% end %>
 
     <div>
@@ -38,6 +54,18 @@
                                            label: "Preliminari projekto idėjos vertė <i>(Ne daugiau nei šeši skaitmenys)</i>".html_safe,
                                            class: "your-custom-class-for-styling" %>
       </div>
+      <% if feature?(:allow_attached_documents) %>
+        <div class="documents">
+          <%= render Documents::NestedComponent.new(f) %>
+          <% if @investment.errors[:documents].any? %>
+            <div class="callout alert">
+              <strong>
+                <%= @investment.errors[:documents].join(", ") %>
+              </strong>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
   </fieldset>
 
@@ -45,18 +73,23 @@
 
   <fieldset>
     <legend><%= t("shared.optional") %></legend>
-
     <% if feature?(:allow_images) %>
       <%= render Images::NestedComponent.new(f) %>
     <% end %>
 
-    <% if feature?(:allow_attached_documents) %>
-      <div class="documents">
-        <%= render Documents::NestedComponent.new(f) %>
-      </div>
+    <% if !current_user.email.present? || current_user.email == "noemail@krs.lt" || !current_user.phone_number.present? %>
+      <legend><%= "Kontaktinė informacija" %></legend>
     <% end %>
 
-    <% if feature?(:map) %>
+    <% if !current_user.email.present? || current_user.email == "noemail@krs.lt" %>
+      <%= f.email_field :user_email, value: current_user.email, label: "Teikėjo el. paštas" %>
+    <% end %>
+
+    <% unless current_user.phone_number.present? %>
+      <%= f.telephone_field :user_phone_number, maxlength: 12, placeholder: "+370XXXXXXXX", value: current_user.phone_number, label: "Teikėjo tel. numeris" %>
+    <% end %>
+
+    <% if false %>
       <div>
         <%= render "map_locations/form_fields",
                    form: f,
@@ -67,12 +100,8 @@
       </div>
     <% end %>
 
-    <div>
-      <%= f.text_field :location, label: "Projekto idėjos įgyvendinimo vieta" %>
-    </div>
-
     <!--    <div>-->
-    <%#= f.text_field :organization_name %>
+<%#= f.text_field :organization_name %>
     <!--    </div>-->
 
     <div>
@@ -95,14 +124,14 @@
                                   data: { js_url: suggest_tags_path } %>
     </div>
 
-    <%#= render SDG::RelatedListSelectorComponent.new(f) %>
+<%#= render SDG::RelatedListSelectorComponent.new(f) %>
   </fieldset>
 
   <div class="actions" style="display: flex; flex-direction: column; align-items: center;">
     <% unless current_user.manager? || investment.persisted? %>
       <%= f.check_box :plan_accepted,
                       title: "Naudos atitikimas",
-                      label: "Projekto idėjos rezultatai, jų nauda, atitinka #{link_to('Kauno rajono savivaldybės 2023-2025 m. strateginio veiklos plano', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')}, „Investicijų į kaimo plėtra užtikrinimas“." %>
+                      label: "Projekto idėjos rezultatai, jų nauda, atitinka bent vieną #{link_to('Kauno rajono savivaldybės 2023-2025 m. strateginio veiklos', 'https://www.krs.lt/savivaldybe/administracine-informacija/planavimo-dokumentai-2/strateginiai-veiklos-planai/', target: 'blank')} plano 4 programos tikslą" %>
       <div style="display: flex; align-items: center; margin-bottom: 10px;">
         <%= f.check_box :terms_of_service,
                         title: t("form.accept_terms_title"),
@@ -112,9 +141,38 @@
       </div>
     <% end %>
 
-    <%= f.submit %>
+    <%= f.submit "Pateikti projekto idėją" %>
   </div>
 
 
 
 <% end %>
+
+
+<script>
+  $(document).ready(function () {
+    // Select the #mySelect element and attach a change event handler
+    $('#budget_investment_group_id').on('change', function () {
+      // Show an alert with the selected value
+      var group_id = $(this).val();
+      $.ajax({
+        url: 'dropdown/update_heading_options/',
+        type: 'GET',
+        dataType: 'json',
+        data: {group_id: group_id},
+        success: function (data) {
+          // Update the options in the second dropdown
+          var optionsHtml = data.options.map(function (option) {
+            return '<option value="' + option[1] + '">' + option[0] + '</option>';
+          }).join('');
+
+          $('#budget_investment_heading_id').html(optionsHtml);
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+        }
+      });
+
+    });
+  });
+</script>

@@ -18,7 +18,7 @@ lt:
       last_attempt: "Jums liko vienas bandymas prieš užrakinant jūsų paskyrą."
       not_found_in_database: "Neteisingas %{authentication_keys} ar slaptažodis."
       timeout: "Jūsų sesija pasibaigė. Prašome prisijungti iš naujo."
-      unauthenticated: "Norėdami tęsti, turite prisijungti ar užsiregistruoti."
+      unauthenticated: "Norėdami tęsti, turite prisijungti."
       unconfirmed: "Norėdami tęsti, prašome paspausti patvirtinimo nuorodą, kurią jums išsiuntėme el. paštu."
     mailer:
       confirmation_instructions:
@@ -37,8 +37,8 @@ lt:
       updated: "Jūsų slaptažodis sėkmingai pakeistas. Autentifikacija sėkminga."
       updated_not_active: "Jūsų slaptažodis sėkmingai pakeistas."
     registrations:
-      destroyed: "Viso gero! Jūsų paskyra atšaukta. Tikimės greito sugrįžimo."
-      signed_up: "Sveiki atvykę! Jūs esate autentifikuotas."
+      destroyed: "Viso gero! Jūsų paskyra ištrinta. Tikimės greito sugrįžimo."
+      signed_up: "Sveiki atvykę!"
       signed_up_but_inactive: "Jūsų registracija buvo sėkminga, tačiau jūs negalite prisijungti, nes jūsų paskyra dar neaktyvuota."
       signed_up_but_locked: "Jūsų registracija buvo sėkminga, tačiau jūs negalite prisijungti, nes jūsų paskyra užrakinta."
       signed_up_but_unconfirmed: "Jums išsiųstas pranešimas su patvirtinimo nuoroda. Prašome paspausti šią nuorodą, kad aktyvuotumėte savo paskyrą."
@@ -60,6 +60,6 @@ lt:
       not_found: "nerastas."
       not_locked: "nebuvo užrakintas."
       not_saved:
-        one: "1 klaida neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtas laukus, kad žinotumėte, kaip jas pataisyti:"
-        other: "%{count} klaidos neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtas laukus, kad žinotumėte, kaip jas pataisyti:"
+        one: "1 klaida neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtus laukus:"
+        other: "%{count} klaidos neleido išsaugoti šio %{resource}. Prašome patikrinti pažymėtus laukus"
       equal_to_current_password: "turi skirtis nuo dabartinio slaptažodžio."

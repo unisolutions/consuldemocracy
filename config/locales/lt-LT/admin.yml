@@ -547,6 +547,7 @@ lt:
         no_hidden_users: "Paslėptų vartotojų nėra."
       show:
         email: "El. paštas:"
+        phone_number: "Tel. numeris:"
         hidden_at: "Paslėpta:"
         registered_at: "Registruota:"
         title: Vartotojo (%{user}) veikla

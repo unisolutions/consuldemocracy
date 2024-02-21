@@ -14,16 +14,17 @@
       </div>
       <div class="js-suggest" data-locale="<%= translations_form.locale %>"></div>
 
-      <div>
-        <%= translations_form.text_area :summary,
-                                        rows: 4, maxlength: 200,
-                                        hint: t("proposals.form.proposal_summary_note") %>
-      </div>
-
+      <% if false %>
+        <div>
+          <%= translations_form.text_area :summary,
+                                          rows: 4, maxlength: 200,
+                                          hint: t("proposals.form.proposal_summary_note") %>
+        </div>
+      <% end %>
       <div>
         <%= translations_form.text_area :description,
                                         maxlength: Proposal.description_max_length,
-                                        class: "html-area" %>
+                                        class: "html-area", label: "Idėjos aprašymas" %>
       </div>
     <% end %>
   </fieldset>
@@ -53,7 +54,7 @@
       </div>
     <% end %>
 
-    <% if feature?(:map) %>
+    <% if false %>
       <div>
         <%= render "map_locations/form_fields",
                    form: f,
@@ -65,29 +66,10 @@
     <% end %>
 
     <div>
-      <%#= f.label :tag_list, t("proposals.form.tags_label") %>
-<!--      <p class="help-text" id="tag-list-help-text"><%#= t("proposals.form.tags_instructions") %></p>-->
-
-<!--      <div id="category_tags" class="tags">-->
-        <%#= f.label :category_tag_list, t("proposals.form.tag_category_label") %>
-        <%# categories.each do |tag| %>
-<!--          <a class="js-add-tag-link"><%#= tag.name %></a>-->
-        <%# end %>
-<!--      </div>-->
-
-<!--      <br>-->
-      <% if false %>
-    <%= f.text_field :tag_list, value: proposal.tag_list.to_s,
-                                  label: false,
-                                  placeholder: t("proposals.form.tags_placeholder"),
-                                  class: "js-tag-list tag-autocomplete",
-                                  aria: { describedby: "tag-list-help-text" },
-                                  data: { js_url: suggest_tags_path } %>
-      <% end %>
 
     </div>
 
-    <% if current_user.unverified? %>
+    <% if current_user&.unverified? %>
       <div>
         <%= f.text_field :responsible_name,
                          hint: t("proposals.form.proposal_responsible_name_note") %>
@@ -100,7 +82,9 @@
   <div class="actions">
     <% if proposal.new_record? %>
       <div>
-        <%= render Shared::AgreeWithTermsOfServiceFieldComponent.new(f) %>
+        <%= f.check_box :terms_of_service,
+                        title: "Ideju banko taisyklaes",
+                        label: "Sutinku su #{link_to('idėjų banko taisyklėmis', 'https://dalyvauk.krs.lt/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBMQT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bf90f254a2e5693de32fbb50bf20d64a2719184a/Id%C4%97j%C5%B3%20banko%20%E2%80%9EDovanok%20id%C4%97j%C4%85%E2%80%9C%20TAISYKL%C4%96S%202024.pdf', target: 'blank')}" %>
       </div>
     <% end %>
 

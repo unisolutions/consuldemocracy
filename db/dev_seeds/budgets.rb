@@ -99,6 +99,7 @@ section "Creating Investments" do
     translation_attributes = random_locales.each_with_object({}) do |locale, attributes|
       attributes["title_#{locale.to_s.underscore}"] = "Title for locale #{locale}"
       attributes["description_#{locale.to_s.underscore}"] = "<p>Description for locale #{locale}</p>"
+      attributes["preliminary_price_#{locale.to_s.underscore}"] = 42069
     end
 
     investment = Budget::Investment.create!({
@@ -112,6 +113,7 @@ section "Creating Investments" do
       valuation_finished: [false, true].sample,
       tag_list: tags.sample(3).join(","),
       price: rand(1..100) * 100000,
+      plan_accepted: "1",
       terms_of_service: "1"
     }.merge(translation_attributes))
 
@@ -153,11 +155,13 @@ section "Winner Investments" do
       budget: heading.group.budget,
       title: Faker::Lorem.sentence(word_count: 3).truncate(60),
       description: "<p>#{Faker::Lorem.paragraphs.join("</p><p>")}</p>",
+      preliminary_price: 42069,
       created_at: rand((1.week.ago)..Time.current),
       feasibility: "feasible",
       valuation_finished: true,
       selected: true,
       price: rand(10000..heading.price),
+      plan_accepted: "1",
       terms_of_service: "1"
     )
     add_image_to_investment(investment) if Random.rand > 0.3

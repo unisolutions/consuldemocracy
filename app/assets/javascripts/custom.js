@@ -4,4 +4,3 @@
 // * Spanish: https://github.com/consuldemocracy/consuldemocracy/blob/master/CUSTOMIZE_ES.md#javascript
 //
 //
-

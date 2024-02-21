@@ -93,7 +93,7 @@ lt:
         recommendations: Rekomendacijos
       recommendations:
         without_results: Nėra diskusijų, susijusių su jūsų interesais
-        without_interests: Sekite pasiūlymus, kad galėtume jums suteikti rekomendacijas
+        without_interests: " "
         disable: "Jei atmesite rekomendacijas diskusijoms, jos daugiau nebus rodomos. Jūs galėsite įjungti jas vėl puslapio „Mano paskyra“ skiltyje"
         actions:
           success: "Rekomendacijos diskusijoms šiai paskyrai dabar išjungtos"
@@ -151,7 +151,7 @@ lt:
     direct_message: privatus pranešimas
     error: klaida
     errors: klaidos
-    not_saved: "sulaikė šį %{resource} nuo įrašymo. <br>Prašome patikrinti pažymėtas laukus, kaip ištaisyti juos:"
+    not_saved: "sulaikė %{resource} nuo įrašymo. <br>Prašome patikrinti pažymėtus laukus"
     policy: Privatumo politika
     banner: baneris
     proposal: Pasiūlymas
@@ -199,7 +199,7 @@ lt:
       conditions: Naudojimosi sąlygos
       consul: PROGRAMOS CONSUL DEMOKRATIJA
       consul_url: https://github.com/consuldemocracy/consuldemocracy
-      copyright: CONSUL DEMOKRATIJA, %{year}
+      copyright: Dalyvauk, %{year}
       description: Ši svetainė naudoja %{consul}, kuris yra %{open_source}.
       open_source: atvirojo kodo programinė įranga
       open_source_url: http://www.gnu.org/licenses/agpl-3.0.html
@@ -286,10 +286,10 @@ lt:
     created:
       title: Sveikiname! Tu žengiai pirmą žingsnį.
       motivation: "Svarbu tinkamai parengti kampaniją, kad tavo pasiūlymas būtų sėkmingas. Pirmosios kelios dienos yra lemiamos."
-      motivation_2: "<strong>Jeigu norite rekomendacijų dėl pasiruošimo paskelbimui, palikite pasiūlymą kaip juodraštį, ir mes jums padėsime.</strong>"
+      motivation_2: "<strong>Šią idėją turi patvirtinti administratorius.</strong>"
       publish: Ne, noriu iškart paskelbti pasiūlymą
       dashboard: Taip, noriu pagalbos ir paskelbsiu vėliau
-      preview_title: Taip atrodys jūsų pasiūlymas, kai jį paskelbsite
+      preview_title: Taip atrodys jūsų pasiūlymas, kai jį patvirtins administratorius.
     share:
       improve_it: Gerinkite savo kampaniją ir gaukite daugiau palaikymo.
       dashboard: Rodyti daugiau informacijos
@@ -389,7 +389,7 @@ lt:
         edit: "Kol ji dar nėra bendrinamas, galėsite pakeisti tekstą kaip norite."
         view_proposal: "Ne dabar, eiti į mano idėją"
       already_supported: "Jūs išreiškėte palaikymą šiai idėjai."
-      support: Remti
+      support: Patinka
       undo_support: Nepatinka
       support_label: "Remti %{proposal}"
       support_title: Remti šią idėją
@@ -423,7 +423,7 @@ lt:
       embed_video_title: "Vaizdo įrašas apie %{proposal}"
       title_video_url: "Išorinis vaizdo įrašas"
       author: Autorius
-      draft: Idėja juodraštyje. Kol kas negali gauti rėmimų ir nepasirodo idėjų sąraše.
+      draft: Idėja juodraštyje. Kol kas negali gauti patiktukų ir yra nerodoma idėjų sąraše.
     update:
       form:
         submit_button: Išsaugoti pakeitimus
@@ -751,7 +751,7 @@ lt:
         zero: "Naudotinos 0 kalbos"
         one: "Naudotina 1 kalba"
         other: "Naudotinos %{count} kalbos"
-    optional: "Neprivalomi laukai"
+    optional: "Rekomenduojami laukai"
     required: "Privalomi laukai"
     comments:
       one: "1 komentaras"

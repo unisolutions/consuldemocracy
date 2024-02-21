@@ -1,0 +1,18 @@
+<div class="jumbo light">
+  <div id="<%= dom_id(@proposal) %>" class="row">
+    <div class="small-12 column">
+      <h2><%= t("proposals.created.title") %></h2>
+
+      <p><%= sanitize(t("proposals.created.motivation_2")) %></p>
+
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="small-12 column">
+    <h3><%= t("proposals.created.preview_title") %></h3>
+  </div>
+</div>
+
+<%= render template: "proposals/show", locals: { preview: true } %>
