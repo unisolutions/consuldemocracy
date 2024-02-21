@@ -9,11 +9,10 @@ class ProposalsController < ApplicationController
 
   before_action :load_categories, only: [:index, :map, :summary]
   before_action :load_geozones, only: [:edit, :map, :summary]
-  before_action :authenticate_user!, except: [:create, :created, :new, :index, :show, :map, :summary]
+  before_action :authenticate_user!, except: [:index, :show, :map, :summary]
   before_action :set_view, only: :index
   before_action :proposals_recommendations, only: :index, if: :current_user
 
-  skip_authorization_check only: [:create]
   feature_flag :proposals
 
   invisible_captcha only: [:create, :update], honeypot: :subtitle
@@ -21,7 +20,7 @@ class ProposalsController < ApplicationController
   has_orders ->(c) { Proposal.proposals_orders(c.current_user) }, only: :index
   has_orders %w[most_voted newest oldest], only: :show
 
-  load_and_authorize_resource except: [:create]
+  load_and_authorize_resource
   before_action :destroy_map_location_association, only: :update
 
   helper_method :resource_model, :resource_name
@@ -38,18 +37,7 @@ class ProposalsController < ApplicationController
   end
 
   def create
-    if current_user
-      @proposal = Proposal.new(proposal_params.merge(author: current_user))
-    else
-      user = find_or_create_anonymous_user
-      if user
-        @proposal = Proposal.new(proposal_params.merge(author: user))
-      else
-        flash[:error] = "Ups! Sukurti idėjos nepavyko"
-        redirect_to root_path and return
-      end
-    end
-
+    @proposal = Proposal.new(proposal_params.merge(author: current_user))
     if @proposal.save
       redirect_to created_proposal_path(@proposal), notice: I18n.t("flash.actions.create.proposal")
     else
@@ -108,36 +96,12 @@ class ProposalsController < ApplicationController
     end
   end
 
-  # def publish
-  #   @proposal.publish
-  #   redirect_to share_proposal_path(@proposal), notice: t("proposals.notice.published")
-  # end
+  def publish
+    @proposal.publish
+    redirect_to share_proposal_path(@proposal), notice: t("proposals.notice.published")
+  end
 
   private
-
-  def find_or_create_anonymous_user
-    user = User.find_by(document_number: Rails.configuration.anonymous_credentials)
-    user ||= create_anonymous_user if user.nil?
-    user
-  end
-
-  def create_anonymous_user
-    begin
-      User.create!(
-        username: "Anonimas",
-        email: "anonymous@krs.lt",
-        password: Rails.configuration.anonymous_credentials,
-        password_confirmation: Rails.configuration.anonymous_credentials,
-        document_number: Rails.configuration.anonymous_credentials,
-        confirmed_at: Time.current,
-        terms_of_service: "1"
-      )
-    rescue StandardError => e
-      Rails.logger.error("Error creating anonymous user: #{e.message}")
-      nil
-    end
-  end
-
 
   def proposal_params
     params.require(:proposal).permit(allowed_params)

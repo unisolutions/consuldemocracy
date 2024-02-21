@@ -63,31 +63,31 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   private
 
-  def sign_up_params
-    if params[:user].present? && params[:user][:redeemable_code].blank?
-      params[:user].delete(:redeemable_code)
+    def sign_up_params
+      if params[:user].present? && params[:user][:redeemable_code].blank?
+        params[:user].delete(:redeemable_code)
+      end
+
+      params.require(:user).permit(allowed_params)
     end
 
-    params.require(:user).permit(allowed_params)
-  end
+    def allowed_params
+      [
+        :username, :email, :password,
+        :password_confirmation, :terms_of_service, :locale,
+        :redeemable_code
+      ]
+    end
 
-  def allowed_params
-    [
-      :username, :email, :password,
-      :password_confirmation, :terms_of_service, :locale,
-      :redeemable_code
-    ]
-  end
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.permit(:account_update, keys: [:email])
+    end
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:account_update, keys: [:email])
-  end
+    def erase_params
+      params.require(:user).permit(:erase_reason)
+    end
 
-  def erase_params
-    params.require(:user).permit(:erase_reason)
-  end
-
-  def after_inactive_sign_up_path_for(resource_or_scope)
-    users_sign_up_success_path
-  end
+    def after_inactive_sign_up_path_for(resource_or_scope)
+      users_sign_up_success_path
+    end
 end

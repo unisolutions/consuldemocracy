@@ -62,9 +62,6 @@ module Budgets
       @investment.author = current_user
       @investment.heading = @budget.headings.first if @budget.single_heading?
 
-      if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
-        current_user.update(email: params[:budget_investment][:user_email], phone_number: params[:budget_investment][:user_phone_number])
-      end
       if @investment.save
         Mailer.budget_investment_created(@investment).deliver_later
         redirect_to budget_investment_path(@budget, @investment),
@@ -91,8 +88,8 @@ module Budgets
 
     def suggest
       @resource_path_method = :namespaced_budget_investment_path
-      @resource_relation = resource_model.where(budget: @budget)
-                                         .apply_filters_and_search(@budget, params, @current_filter)
+      @resource_relation    = resource_model.where(budget: @budget)
+                                            .apply_filters_and_search(@budget, params, @current_filter)
       super
     end
 
@@ -118,7 +115,7 @@ module Budgets
 
     def allowed_params
       attributes = [:heading_id, :tag_list, :organization_name, :location,
-                    :terms_of_service, :plan_accepted, :related_sdg_list,
+                    :terms_of_service, :plan_accepted,  :related_sdg_list,
                     image_attributes: image_attributes,
                     documents_attributes: document_attributes,
                     map_location_attributes: map_location_attributes]

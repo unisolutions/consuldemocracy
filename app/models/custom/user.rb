@@ -2,10 +2,9 @@ class User < ApplicationRecord
   include Verification
   attribute :registering_from_web, default: false
 
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable,
+  devise :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable,
          :trackable, :validatable, :omniauthable, :password_expirable, :secure_validatable,
          authentication_keys: [:login]
-
   devise :lockable if Rails.application.config.devise_lockable
 
   acts_as_voter
@@ -82,7 +81,6 @@ class User < ApplicationRecord
   belongs_to :geozone
 
   validates :username, presence: true, if: :username_required?
-  validates :phone_number, numericality: { allow_blank: true }
   validates :username, uniqueness: { scope: :registering_with_oauth }, if: :username_required?
   validates :document_number, uniqueness: { scope: :document_type }, allow_nil: true
 
@@ -259,7 +257,6 @@ class User < ApplicationRecord
       erase_reason: erase_reason,
       username: nil,
       email: nil,
-      document_number: nil,
       unconfirmed_email: nil,
       phone_number: nil,
       encrypted_password: "",

@@ -54,7 +54,7 @@
     <% if feature?(:help_page) %>
       <li>
         <%= layout_menu_link_to t("layouts.header.help"),
-                                Rails.configuration.base_url + '/pagalba',
+                                help_path,
                                 current_page?(help_path),
                                 accesskey: "7" %>
       </li>

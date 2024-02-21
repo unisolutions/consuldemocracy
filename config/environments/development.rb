@@ -3,11 +3,6 @@ require "active_support/core_ext/integer/time"
 
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
-  #viisp configuration
-  config.viisp_pid = 'VSID000000000113'
-  config.viisp_key_route = './config/keys/testKey.pem'
-  config.base_url = 'http://212.24.109.28:3000'
-  config.viisp_test = true
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
@@ -66,7 +61,7 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true #set to false later
+  config.assets.debug = false
 
   # Suppress logger output for asset requests.
   config.assets.quiet = true
