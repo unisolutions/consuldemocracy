@@ -2,8 +2,8 @@ lt:
   images:
     remove_image: "Pašalinti nuotrauką"
     form:
-      title: "Titulinė nuotrauka"
-      title_placeholder: "Pridėkite pavadinimą nuotraukai"
+      title: "Aprašomoji nuotrauka"
+      title_placeholder: "Pridėkite aprašomą pavadinimą nuotraukai"
       delete_button: "Pašalinti nuotrauką"
       note: "Galite įkelti vieną nuotrauką, turintį šiuos turinio tipus: %{accepted_content_types}, iki %{max_file_size} MB dydžio."
       add_new_image: "Pridėti nuotrauką"

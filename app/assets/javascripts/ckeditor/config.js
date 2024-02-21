@@ -16,7 +16,6 @@ CKEDITOR.editorConfig = function( config )
 
   config.removePlugins = "balloonpanel,balloontoolbar,copyformatting,scayt,wsc";
 
-
   // Rails CSRF token
   config.filebrowserParams = function(){
     var csrf_token, csrf_param, meta,

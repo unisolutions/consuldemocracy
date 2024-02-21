@@ -6,6 +6,9 @@
   <%= l investment.created_at.to_date %>
   <span class="bullet">&nbsp;&bull;&nbsp;</span>
   <%= render Shared::CommentsCountComponent.new(investment.comments_count, url: "#comments") %>
+  <span class="bullet">&nbsp;&bull;&nbsp;</span>
+  <%= investment.heading.name %>
+  <span class="bullet">&nbsp;&bull;&nbsp;</span>
   <% if local_assigns[:preview].nil? %>
     <span class="js-flag-actions">
       <%= render "shared/flag_actions", flaggable: investment %>
@@ -17,18 +20,9 @@
 
 <%= render_image(investment.image, :large, true) if investment.image.present? %>
 
-<p><strong>Projekto idėjos kategorija:</strong> <%= @investment.group.name %></p>
-<p><strong>Vieša erdvė:</strong> <%= @investment.heading.name %></p>
-<p><strong>Preliminari projekto vertė:</strong> <%= "#{@investment.preliminary_price} €" %></p>
 <p id="investment_code">
   <%= sanitize(t("budgets.investments.show.code", code: investment.id)) %>
 </p>
-<hr>
-<% if investment.location.present? %>
-  <p>
-    <%= sanitize(t("budgets.investments.show.location", location: investment.location)) %>
-  </p>
-<% end %>
 
 <%= auto_link_already_sanitized_html wysiwyg(investment.description) %>
 
@@ -38,6 +32,12 @@
   <div class="margin">
     <%= render_map(investment.map_location) %>
   </div>
+<% end %>
+
+<% if investment.location.present? %>
+  <p>
+    <%= sanitize(t("budgets.investments.show.location", location: investment.location)) %>
+  </p>
 <% end %>
 
 <% if investment.organization_name.present? %>

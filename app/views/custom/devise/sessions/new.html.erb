@@ -8,18 +8,8 @@
   <p>
     <%= sanitize(t("devise_views.shared.links.signup",
                    signup_link: link_to(t("devise_views.shared.links.signup_link"), new_user_registration_path))) %>
-<!--</p>-->
+</p>
 
-
-<div class="small-12 medium-6 small-centered">
-  <p style="text-align: center; color: red; font-weight: bold;">
-    Prisijungti naudojantis elektroniniais valdžios vartais
-  </p>
-
-  <%= link_to viisp_authenticate_path, class: "button expanded" do %>
-    <%= "Prisijungti" %>
-  <% end %>
-</div>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="row">
@@ -44,4 +34,4 @@
   </div>
 <% end %>
 
-<%#= render "devise/shared/links" %>
+<%= render "devise/shared/links" %>

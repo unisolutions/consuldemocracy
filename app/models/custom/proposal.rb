@@ -44,6 +44,7 @@ class Proposal < ApplicationRecord
 
   validates_translation :title, presence: true, length: { in: 4..Proposal.title_max_length }
   validates_translation :description, length: { maximum: Proposal.description_max_length }
+  validates_translation :summary, presence: true
   validates_translation :retired_explanation, presence: true, unless: -> { retired_at.blank? }
 
   validates :author, presence: true
@@ -54,7 +55,7 @@ class Proposal < ApplicationRecord
             unless: :skip_user_verification?
   validates :retired_reason,
             presence: true,
-            inclusion: { in: ->(*) { RETIRE_OPTIONS } }, unless: -> { retired_at.blank? }
+            inclusion: { in: ->(*) { RETIRE_OPTIONS }}, unless: -> { retired_at.blank? }
 
   validates :terms_of_service, acceptance: { allow_nil: false }, on: :create
 
@@ -66,39 +67,35 @@ class Proposal < ApplicationRecord
 
   after_create :send_new_actions_notification_on_create
 
-  scope :for_render, -> { includes(:tags) }
-  scope :sort_by_hot_score, -> { reorder(hot_score: :desc) }
+  scope :for_render,               -> { includes(:tags) }
+  scope :sort_by_hot_score,        -> { reorder(hot_score: :desc) }
   scope :sort_by_confidence_score, -> { reorder(confidence_score: :desc) }
-  scope :sort_by_created_at, -> { reorder(created_at: :desc) }
-  scope :sort_by_most_commented, -> { reorder(comments_count: :desc) }
-  scope :sort_by_relevance, -> { all }
-  scope :sort_by_flags, -> { order(flags_count: :desc, updated_at: :desc) }
-  scope :sort_by_archival_date, -> { archived.sort_by_confidence_score }
-  scope :sort_by_recommendations, -> { order(cached_votes_up: :desc) }
+  scope :sort_by_created_at,       -> { reorder(created_at: :desc) }
+  scope :sort_by_most_commented,   -> { reorder(comments_count: :desc) }
+  scope :sort_by_relevance,        -> { all }
+  scope :sort_by_flags,            -> { order(flags_count: :desc, updated_at: :desc) }
+  scope :sort_by_archival_date,    -> { archived.sort_by_confidence_score }
+  scope :sort_by_recommendations,  -> { order(cached_votes_up: :desc) }
 
-  scope :archived, -> { where("proposals.created_at <= ?", Setting.archived_proposals_date_limit) }
-  scope :not_archived, -> { where("proposals.created_at > ?", Setting.archived_proposals_date_limit) }
-  scope :last_week, -> { where("proposals.created_at >= ?", 7.days.ago) }
-  scope :retired, -> { where.not(retired_at: nil) }
-  scope :not_retired, -> { where(retired_at: nil) }
-  scope :successful, -> { where("cached_votes_up >= ?", Proposal.votes_needed_for_success) }
-  scope :unsuccessful, -> { where("cached_votes_up < ?", Proposal.votes_needed_for_success) }
+  scope :archived,       -> { where("proposals.created_at <= ?", Setting.archived_proposals_date_limit) }
+  scope :not_archived,   -> { where("proposals.created_at > ?", Setting.archived_proposals_date_limit) }
+  scope :last_week,      -> { where("proposals.created_at >= ?", 7.days.ago) }
+  scope :retired,        -> { where.not(retired_at: nil) }
+  scope :not_retired,    -> { where(retired_at: nil) }
+  scope :successful,     -> { where("cached_votes_up >= ?", Proposal.votes_needed_for_success) }
+  scope :unsuccessful,   -> { where("cached_votes_up < ?", Proposal.votes_needed_for_success) }
   scope :public_for_api, -> { all }
-  scope :selected, -> { where(selected: true) }
-  scope :not_selected, -> { where(selected: false) }
-  scope :published, -> { where.not(published_at: nil) }
-  scope :draft, -> { where(published_at: nil) }
+  scope :selected,       -> { where(selected: true) }
+  scope :not_selected,   -> { where(selected: false) }
+  scope :published,      -> { where.not(published_at: nil) }
+  scope :draft,          -> { where(published_at: nil) }
 
   scope :not_supported_by_user, ->(user) { where.not(id: user.find_voted_items(votable_type: "Proposal")) }
-  scope :created_by, ->(author) { where(author: author) }
+  scope :created_by,            ->(author) { where(author: author) }
 
   def publish
     update!(published_at: Time.current)
     send_new_actions_notification_on_published
-  end
-
-  def unpublish
-    update!(published_at: nil)
   end
 
   def published?
@@ -158,7 +155,7 @@ class Proposal < ApplicationRecord
   def self.for_summary
     summary = {}
     categories = Tag.category_names.sort
-    geozones = Geozone.names.sort
+    geozones   = Geozone.names.sort
 
     groups = categories + geozones
     groups.each do |group|
@@ -279,9 +276,9 @@ class Proposal < ApplicationRecord
 
   protected
 
-  def set_responsible_name
-    if author&.document_number?
-      self.responsible_name = author.document_number
+    def set_responsible_name
+      if author&.document_number?
+        self.responsible_name = author.document_number
+      end
     end
-  end
 end
