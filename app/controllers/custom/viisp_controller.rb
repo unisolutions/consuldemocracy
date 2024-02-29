@@ -11,7 +11,7 @@ class ViispController < Devise::SessionsController
       c.postback_url = Rails.configuration.base_url + '/viisp/callback' # Rails.configuration.base_url
 
       # optional
-      c.providers = %w[auth.lt.identity.card auth.lt.bank]
+      c.providers = %w[auth.lt.identity.card auth.lt.bank auth.signatureProvider]
       c.attributes = %w[lt-personal-code lt-company-code]
       c.user_information = %w[firstName lastName companyName email]
 
