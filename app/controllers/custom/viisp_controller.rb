@@ -59,9 +59,6 @@ class ViispController < Devise::SessionsController
       # Save the new user
       if user.save
         flash[:notice] = t('devise.registrations.signed_up')
-        if personal_code == "39811020591"
-          user.create_administrator
-        end
       else
         flash[:alert] = "Prisijungti nepavyko"
         redirect_to root_path and return
