@@ -62,8 +62,15 @@ module Budgets
       @investment.author = current_user
       @investment.heading = @budget.headings.first if @budget.single_heading?
 
-      if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
-        current_user.update(email: params[:budget_investment][:user_email], phone_number: params[:budget_investment][:user_phone_number])
+       if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
+        current_user.update(
+          email: params[:budget_investment][:user_email],
+          phone_number: params[:budget_investment][:user_phone_number]
+        )
+      elsif params[:budget_investment][:user_phone_number].present?
+        current_user.update(phone_number: params[:budget_investment][:user_phone_number])
+      elsif params[:budget_investment][:user_email].present?
+        current_user.update(email: params[:budget_investment][:user_email])
       end
       if @investment.save
         Mailer.budget_investment_created(@investment).deliver_later
