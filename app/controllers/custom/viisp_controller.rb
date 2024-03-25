@@ -28,6 +28,9 @@ class ViispController < Devise::SessionsController
   end
 
   def callback
+
+    access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzE5Mi4xNjguMjAxLjkwIiwiaWF0IjoxNzA4NDE0Nzc1LCJuYmYiOjE3MDg0MTQ3NzUsImV4cCI6MTczODIzOTM4NCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNTQifX19.oKOPvlNSshn1_D4VjJFyOFn7UbyZOqxuBhfiksHgcaE"
+
     ticket = params[:ticket]
     identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
     back_url = identity["custom_data"]
@@ -42,7 +45,9 @@ class ViispController < Devise::SessionsController
     end
 
     encrypted_personal_code = encrypt_string(personal_code)
+
     age = calculate_age_from_personal_code(personal_code)
+    is_citizen = check_personal_code(personal_code, access_token)
 
     user = User.find_by(document_number: encrypted_personal_code)
 
@@ -54,6 +59,7 @@ class ViispController < Devise::SessionsController
         password: Devise.friendly_token[0, 20],
         terms_of_service: "1",
         age: age,
+        district_citizen: is_citizen,
         confirmed_at: Time.current,
         verified_at: Time.current
       )
@@ -67,11 +73,16 @@ class ViispController < Devise::SessionsController
       end
     end
 
+    if user.age == 0
+      user.update(age: age)
+    end
+
+    if user.district_citizen == false
+      user.update(district_citizen: is_citizen)
+    end
+
     # Authenticate the user
     if user
-      if user.age == 0
-        user.update(age: age)
-      end
       sign_in(resource_name, user)
       yield user if block_given?
       # respond_with user, location: after_sign_in_path_for(user)
@@ -118,6 +129,35 @@ class ViispController < Devise::SessionsController
       puts "Error: #{e.message}"
       0
     end
+  end
+
+  def check_personal_code(personal_code, access_token)
+    conn = Faraday.new(url: 'http://195.182.94.66:8888') do |faraday|
+      faraday.request :url_encoded
+      faraday.headers['Authorization'] = "Bearer #{access_token}" if access_token
+      faraday.adapter Faraday.default_adapter
+    end
+
+    response = conn.get("/wp-json/krsapi/v1/tikrinti/?asmensKodas=#{personal_code}")
+
+    case response.body
+    when "1"
+      true
+    when "0"
+      false
+    else
+      puts "Unexpected response: #{response.body}"
+      # Return nil or handle error accordingly
+      false
+    end
+  rescue Faraday::ConnectionFailed => e
+    puts "Error connecting to the server: #{e}"
+    # Return nil or handle error accordingly
+    false
+  rescue Faraday::TimeoutError => e
+    puts "Timeout error: #{e}"
+    # Return nil or handle error accordingly
+    false
   end
 
 end

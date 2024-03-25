@@ -362,10 +362,6 @@ class User < ApplicationRecord
     "#{name} (#{email})"
   end
 
-  def age
-    Age.in_years(date_of_birth)
-  end
-
   def save_requiring_finish_signup
     begin
       self.registering_with_oauth = true
