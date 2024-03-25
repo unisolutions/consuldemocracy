@@ -1,0 +1,190 @@
+<%= link_to admin_budget_budget_investment_path(@budget, @investment, Budget::Investment.filter_params(params).to_h), class: "back" do %>
+  <span class="icon-angle-left"></span> <%= t("shared.back") %>
+<% end %>
+
+<%= render "shared/globalize_locales", resource: @investment %>
+
+<div class="row">
+  <br>
+  <%= translatable_form_for @investment,
+                            url: admin_budget_budget_investment_path(@budget, @investment) do |f| %>
+
+    <%= render "shared/errors", resource: @investment %>
+
+    <% Budget::Investment.filter_params(params).to_h.each do |filter_name, filter_value| %>
+      <%= hidden_field_tag filter_name, filter_value %>
+    <% end %>
+
+    <div class="row expanded">
+      <%= f.translatable_fields do |translations_form| %>
+        <div class="small-12 column">
+          <%= translations_form.text_field :title,
+                                           maxlength: Budget::Investment.title_max_length %>
+        </div>
+
+        <div class="small-12 column">
+          <%= translations_form.text_area :description,
+                                          maxlength: Budget::Investment.description_max_length,
+                                          class: "html-area" %>
+        </div>
+
+        <% if feature?(:allow_attached_documents) %>
+          <div class="documents" style="padding-left: 36px; padding-right: 36px;">
+            <%= render Documents::NestedComponent.new(f) %>
+            <% if @investment.errors[:documents].any? %>
+              <div class="callout alert">
+                <strong>
+                  <%= @investment.errors[:documents].join(", ") %>
+                </strong>
+              </div>
+            <% end %>
+          </div>
+        <% end %>
+      <% end %>
+
+      <div class="small-12 column">
+        <br>
+        <% if feature?(:allow_images) %>
+          <%= render Images::NestedComponent.new(f) %>
+        <% end %>
+        <br>
+        <% unless @budget.single_heading? %>
+
+          <div>
+            <%= f.select :group_id,
+                         group_select_options(@budget),
+                         label: "Projekto idėjos kategorija",
+                         class: "group-dropdown",
+                         id: "group-id-dropdown"
+            %>
+          </div>
+
+
+          <% if @budget.headings.size > 0 %>
+            <div>
+              <%= f.select :heading_id,
+                           budget_heading_select_options(@budget, @investment.group_id),
+                           label: "Viešoji erdvė",
+                           class: "heading-dropdown",
+                           id: "heading-id-dropdown"
+
+              %>
+            </div>
+
+          <% end %>
+
+        <% end %>
+
+        <%= f.text_field :tag_list,
+                         value: @investment.tag_list.sort.join(","),
+                         label: t("admin.budget_investments.edit.user_tags") %>
+      </div>
+
+      <div class="small-12 column">
+        <div class="small-12 medium-6">
+          <%= f.text_field :external_url %>
+        </div>
+      </div>
+    </div>
+
+    <div class="row expanded margin-top">
+
+      <div class="small-12 column">
+        <h2 id="classification"><%= t("admin.budget_investments.edit.classification") %></h2>
+
+        <div class="small-12 medium-6">
+          <%= f.select(:administrator_id,
+                       @admins.map { |a| [a.description_or_name_and_email, a.id] },
+                       { include_blank: t("admin.budget_investments.edit.undefined") }) %>
+        </div>
+      </div>
+
+      <div class="small-12 column">
+        <%= f.label :valuation_tag_list %>
+        <div class="tags">
+          <% @tags.each do |tag| %>
+            <a class="js-add-tag-link"><%= tag.name %></a>
+          <% end %>
+        </div>
+        <%= f.text_field :valuation_tag_list,
+                         value: @investment.valuation_tag_list.sort.join(","),
+                         label: false,
+                         placeholder: t("admin.budget_investments.edit.tags_placeholder"),
+                         class: "js-tag-list" %>
+      </div>
+
+      <div class="small-12 column margin-top">
+        <%= f.label :valuator_ids %>
+        <ul>
+          <%= f.collection_check_boxes :valuator_group_ids, @valuator_groups, :id, :name do |group| %>
+            <li><%= group.label(title: group.object.name) { group.check_box + truncate(group.object.name, length: 60) } %></li>
+          <% end %>
+        </ul>
+      </div>
+
+      <div class="small-12 column">
+        <hr>
+        <%= f.label :valuator_ids, t("admin.budget_investments.edit.assigned_valuators") %>
+        <ul>
+          <%= f.collection_check_boxes :valuator_ids, @valuators, :id, :email do |b| %>
+            <li><%= b.label(title: valuator_label(b.object)) { b.check_box + truncate(b.object.description_or_email, length: 60) } %></li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row expanded margin-top">
+      <% if @investment.incompatible? || @investment.winner? %>
+        <div class="small-12 medium-3 column">
+          <h2 id="incompatible"><%= t("admin.budget_investments.edit.compatibility") %></h2>
+          <%= f.check_box :incompatible,
+                          title: t("admin.budget_investments.edit.compatibility") %>
+        </div>
+      <% end %>
+      <div class="small-12 medium-3 column float-left">
+        <h2 id="selected"><%= t("admin.budget_investments.edit.selection") %></h2>
+        <%= f.check_box :selected,
+                        title: t("admin.budget_investments.edit.selection") %>
+      </div>
+    </div>
+
+    <!--    <div class="small-12 column">
+      <%= f.text_field :milestone_tag_list,
+                       value: @investment.milestone_tag_list.sort.join(", ") %>
+    </div>-->
+
+    <div class="small-12 column margin-top">
+      <%= f.submit(class: "button", value: t("admin.budget_investments.edit.submit_button")) %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  $(document).ready(function () {
+    // Select the #mySelect element and attach a change event handler
+    $('#budget_investment_group_id').on('change', function () {
+      // Show an alert with the selected value
+      var group_id = $(this).val();
+      var budgetId = <%= @budget.id %>; // Assuming budget has an 'id' attribute
+
+      $.ajax({
+        url: '/dropdown/update_heading_options/',
+        type: 'GET',
+        dataType: 'json',
+        data: {group_id: group_id, budget_id: budgetId}, // Pass both group_id and budget_id
+        success: function (data) {
+          // Update the options in the second dropdown
+          var optionsHtml = data.options.map(function (option) {
+            return '<option value="' + option[1] + '">' + option[0] + '</option>';
+          }).join('');
+
+          $('#budget_investment_heading_id').html(optionsHtml);
+        },
+        error: function (xhr, status, error) {
+          console.error(error);
+        }
+      });
+
+    });
+  });
+</script>

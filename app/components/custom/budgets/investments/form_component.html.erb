@@ -19,7 +19,7 @@
       <% if budget.headings.size > 0 %>
         <div>
           <%= f.select :heading_id,
-                       budget_heading_select_options(budget),
+                       budget_heading_select_options(budget, investment.group_id),
                        label: "Viešoji erdvė",
                        class: "heading-dropdown",
                        id: "heading-id-dropdown"
@@ -155,11 +155,13 @@
     $('#budget_investment_group_id').on('change', function () {
       // Show an alert with the selected value
       var group_id = $(this).val();
+      var budgetId = <%= budget.id %>; // Assuming budget has an 'id' attribute
+
       $.ajax({
-        url: 'dropdown/update_heading_options/',
+        url: '/dropdown/update_heading_options/',
         type: 'GET',
         dataType: 'json',
-        data: {group_id: group_id},
+        data: {group_id: group_id, budget_id: budgetId}, // Pass both group_id and budget_id
         success: function (data) {
           // Update the options in the second dropdown
           var optionsHtml = data.options.map(function (option) {

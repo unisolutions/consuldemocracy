@@ -7,9 +7,12 @@ module BudgetHeadingsHelper
     end
   end
 
-  def budget_heading_select_options(budget)
+  def budget_heading_select_options(budget, group_id = nil)
     if budget.headings.size > 0
       selected_group_id = budget.groups[0].id
+      if group_id != nil
+        selected_group_id = group_id
+      end
 
       headings = budget.headings.includes(:group).sort_by(&:name)
 
