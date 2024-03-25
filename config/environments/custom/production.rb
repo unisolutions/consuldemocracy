@@ -10,4 +10,6 @@ Rails.application.configure do
   config.base_url = 'https://dalyvauk.krs.lt'
   config.viisp_test = false
 
+  config.krs_endpoint = 'http://192.168.201.90/wp-json/krsapi/v1'
+
 end

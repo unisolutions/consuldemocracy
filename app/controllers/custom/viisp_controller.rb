@@ -132,13 +132,13 @@ class ViispController < Devise::SessionsController
   end
 
   def check_personal_code(personal_code, access_token)
-    conn = Faraday.new(url: 'http://195.182.94.66:8888') do |faraday|
+    conn = Faraday.new(url: Rails.configuration.krs_endpoint) do |faraday|
       faraday.request :url_encoded
       faraday.headers['Authorization'] = "Bearer #{access_token}" if access_token
       faraday.adapter Faraday.default_adapter
     end
 
-    response = conn.get("/wp-json/krsapi/v1/tikrinti/?asmensKodas=#{personal_code}")
+    response = conn.get("/tikrinti/?asmensKodas=#{personal_code}")
 
     case response.body
     when "1"
@@ -147,16 +147,13 @@ class ViispController < Devise::SessionsController
       false
     else
       puts "Unexpected response: #{response.body}"
-      # Return nil or handle error accordingly
       false
     end
   rescue Faraday::ConnectionFailed => e
     puts "Error connecting to the server: #{e}"
-    # Return nil or handle error accordingly
     false
   rescue Faraday::TimeoutError => e
     puts "Timeout error: #{e}"
-    # Return nil or handle error accordingly
     false
   end
 
