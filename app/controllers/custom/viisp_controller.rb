@@ -42,6 +42,7 @@ class ViispController < Devise::SessionsController
     end
 
     encrypted_personal_code = encrypt_string(personal_code)
+    age = calculate_age_from_personal_code(personal_code)
 
     user = User.find_by(document_number: encrypted_personal_code)
 
@@ -52,6 +53,7 @@ class ViispController < Devise::SessionsController
         document_number: encrypted_personal_code,
         password: Devise.friendly_token[0, 20],
         terms_of_service: "1",
+        age: age,
         confirmed_at: Time.current,
         verified_at: Time.current
       )
@@ -67,6 +69,9 @@ class ViispController < Devise::SessionsController
 
     # Authenticate the user
     if user
+      if user.age == 0
+        user.update(age: age)
+      end
       sign_in(resource_name, user)
       yield user if block_given?
       # respond_with user, location: after_sign_in_path_for(user)
@@ -81,6 +86,38 @@ class ViispController < Devise::SessionsController
     sha256_hash = Digest::SHA256.hexdigest(input)
     truncated_hash = sha256_hash[0, 14]
     return truncated_hash.upcase
+  end
+
+  def calculate_age_from_personal_code(personal_code)
+    begin
+      # Extracting the birth year, month, and day from the personal code
+      birth_year_prefix = personal_code[0].to_i
+      return 0 unless (1..6).include?(birth_year_prefix)
+
+      birth_year = case birth_year_prefix
+                   when 1, 2
+                     1800 + personal_code[1, 2].to_i
+                   when 3, 4
+                     1900 + personal_code[1, 2].to_i
+                   when 5, 6
+                     2000 + personal_code[1, 2].to_i
+                   end
+
+      month = personal_code[3, 2].to_i
+      day = personal_code[5, 2].to_i
+
+      # Parsing the birthdate
+      birthdate = Date.new(birth_year, month, day)
+
+      # Calculating the age based on the birthdate and the current date
+      current_date = Date.today
+      age = current_date.year - birthdate.year
+      age -= 1 if current_date.month < birthdate.month || (current_date.month == birthdate.month && current_date.day < birthdate.day)
+      age >= 0 ? age : 0
+    rescue ArgumentError => e
+      puts "Error: #{e.message}"
+      0
+    end
   end
 
 end
