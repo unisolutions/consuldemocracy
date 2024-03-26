@@ -16,7 +16,7 @@ Rails.application.configure do
 
   config.viisp_pid = 'VSID000000000113'
   config.viisp_key_route = './config/keys/testKey.pem'
-  config.base_url = 'http://80.208.231.133'
+  config.base_url = 'https://dev-new.unisolutions.eu/'
   config.viisp_test = true
 
   config.krs_endpoint = 'http://195.182.94.66:8888/wp-json/krsapi/v1'
