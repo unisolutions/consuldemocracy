@@ -1,3 +1,16 @@
+<% if budget.single_heading? && !budget.informing? || investments.any? %>
+  <div class="row margin-top">
+    <div class="small-12 medium-6 large-4 small-centered column margin-top">
+   <!--   <%= link_to t("budgets.investments_list.see_all"),
+                  see_all_path,
+                  class: "button expanded" %>-->
+      <%= link_to t("budgets.investments_list.see_all"),
+                  budget_investments_path(budget.id, heading_id: budget.headings.first.id),
+                  class: "button expanded" %>
+    </div>
+  </div>
+<% end %>
+
 <% if investments.any? %>
   <section id="investments_list" class="investments-list">
     <header>
@@ -8,14 +21,4 @@
       <%= render Budgets::InvestmentComponent.new(investment) %>
     <% end %>
   </section>
-<% end %>
-
-<% if budget.single_heading? && !budget.informing? || investments.any? %>
-  <div class="row margin-top">
-    <div class="small-12 medium-6 large-4 small-centered column margin-top">
-      <%= link_to t("budgets.investments_list.see_all"),
-                  see_all_path,
-                  class: "button expanded" %>
-    </div>
-  </div>
 <% end %>
