@@ -37,20 +37,6 @@
               <% end %>
             </div>
 
-
-            <!--    <%# @budget.groups.order(:id).each do |group| %>
-              <%#= group.name %>
-            <%# end %>
-
-            <%# @budget.groups.first.headings.order(:id).each do |group| %>
-              <%#= group.name %>
-            <%# end %>-->
-            <!-- <%# @budget.headings.order(:id).each do |heading| %>
-              <%# group_name = heading.group.name %>
-              <%#= link_to "#{group_name}: #{heading.name} ", budget_investments_path(@budget, heading_id: heading.id), class: "button" %>
-            <%# end %>
--->
-
             <% if @ballot.valid_heading?(@heading) %>
               <div class="progress-bar-nav" data-fixed-bar>
                 <h2>
@@ -109,62 +95,51 @@
 <% end %>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    // Function to toggle visibility of heading containers
-    function toggleHeadingVisibility(groupId) {
-      const selectedHeadingsContainer = document.getElementById(`group_${groupId}_headings`);
-      const isCurrentlyVisible = selectedHeadingsContainer.style.display === "block";
+  // Function to toggle visibility of heading containers
+  function toggleHeadingVisibility(groupId) {
+    const selectedHeadingsContainer = document.getElementById(`group_${groupId}_headings`);
+    const isCurrentlyVisible = selectedHeadingsContainer.style.display === "block";
 
-      // Toggle visibility of the headings container
-      selectedHeadingsContainer.style.display = isCurrentlyVisible ? "none" : "block";
+    // Toggle visibility of the headings container
+    selectedHeadingsContainer.style.display = isCurrentlyVisible ? "none" : "block";
 
-      // Hide all other headings containers
-      document.querySelectorAll(".headings-container").forEach(container => {
-        if (container.id !== `group_${groupId}_headings`) {
-          container.style.display = "none";
-        }
-      });
-
-      // If the container was previously hidden, scroll to it
-      if (!isCurrentlyVisible) {
-        selectedHeadingsContainer.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    // Add event listener to the document for handling click events on group buttons
-    document.addEventListener("click", function(event) {
-      const target = event.target;
-
-      // Check if the clicked element is a group button
-      if (target.matches(".group-button")) {
-        const groupId = target.dataset.groupId;
-        toggleHeadingVisibility(groupId);
-      }
-
-      // Prevent click events on heading buttons from bubbling up to parent elements
-      if (target.matches(".heading-button")) {
-        event.stopPropagation();
+    // Hide all other headings containers
+    document.querySelectorAll(".headings-container").forEach(container => {
+      if (container.id !== `group_${groupId}_headings`) {
+        container.style.display = "none";
       }
     });
 
-    // Check URL parameters for heading ID and show corresponding headings container
-    const urlParams = new URLSearchParams(window.location.search);
-    const headingId = urlParams.get("heading_id");
-    if (headingId) {
-      const groupButton = document.querySelector(`.group-button[data-group-id='${headingId}']`);
-      if (groupButton) {
-        toggleHeadingVisibility(headingId);
-      }
+    // If the container was previously hidden, scroll to it
+    if (!isCurrentlyVisible) {
+      selectedHeadingsContainer.scrollIntoView({behavior: 'smooth'});
+    }
+  }
+
+  // Add event listener to the document for handling click events on group buttons
+  document.addEventListener("click", function (event) {
+    const target = event.target;
+
+    // Check if the clicked element is a group button
+    if (target.matches(".group-button")) {
+      const groupId = target.dataset.groupId;
+
+      toggleHeadingVisibility(groupId);
+    }
+
+    // Prevent click events on heading buttons from bubbling up to parent elements
+    if (target.matches(".heading-button")) {
+      event.stopPropagation();
     }
   });
+
+  // Check URL parameters for heading ID and show corresponding headings container
+  const urlParams = new URLSearchParams(window.location.search);
+  const headingId = urlParams.get("heading_id");
+  if (headingId) {
+    const groupButton = document.querySelector(`.group-button[data-group-id='${headingId}']`);
+    if (groupButton) {
+      toggleHeadingVisibility(headingId);
+    }
+  }
 </script>
-
-
-
-
-
-
-
-
-
-
