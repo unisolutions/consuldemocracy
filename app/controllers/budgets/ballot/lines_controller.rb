@@ -1,6 +1,11 @@
 module Budgets
   module Ballot
     class LinesController < ApplicationController
+
+      rescue_from CanCan::AccessDenied do |exception|
+        redirect_to root_url, alert: "Turite būti kauno rajono savivaldybės gyventojas ir būti vyresnis nei 18 metų."
+      end
+
       before_action :authenticate_user!
       before_action :load_budget
       before_action :load_ballot
