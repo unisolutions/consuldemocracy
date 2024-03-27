@@ -115,23 +115,20 @@
       const selectedHeadingsContainer = document.getElementById(`group_${groupId}_headings`);
       const isCurrentlyVisible = selectedHeadingsContainer.style.display === "block";
 
-      // Store the current scroll position
-      const scrollPosition = window.pageYOffset;
+      // Toggle visibility of the headings container
+      selectedHeadingsContainer.style.display = isCurrentlyVisible ? "none" : "block";
 
-      // Toggle visibility of the headings container only if it's currently hidden
+      // Hide all other headings containers
+      document.querySelectorAll(".headings-container").forEach(container => {
+        if (container.id !== `group_${groupId}_headings`) {
+          container.style.display = "none";
+        }
+      });
+
+      // If the container was previously hidden, scroll to it
       if (!isCurrentlyVisible) {
-        selectedHeadingsContainer.style.display = "block";
-
-        // Hide all other headings containers
-        document.querySelectorAll(".headings-container").forEach(container => {
-          if (container.id !== `group_${groupId}_headings`) {
-            container.style.display = "none";
-          }
-        });
+        selectedHeadingsContainer.scrollIntoView({ behavior: 'smooth' });
       }
-
-      // Restore the scroll position after toggling visibility
-      window.scrollTo(0, scrollPosition);
     }
 
     // Add event listener to the document for handling click events on group buttons
@@ -161,6 +158,7 @@
     }
   });
 </script>
+
 
 
 
