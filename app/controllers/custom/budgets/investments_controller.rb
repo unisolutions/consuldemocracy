@@ -62,7 +62,7 @@ module Budgets
       @investment.author = current_user
       @investment.heading = @budget.headings.first if @budget.single_heading?
 
-       if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
+      if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
         current_user.update(
           email: params[:budget_investment][:user_email],
           phone_number: params[:budget_investment][:user_phone_number]
@@ -138,10 +138,12 @@ module Budgets
       @ballot = @budget.balloting? ? query.first_or_create! : query.first_or_initialize
     end
 
+
     def load_heading
       if params[:heading_id].present?
         @heading = @budget.headings.find_by_slug_or_id! params[:heading_id]
         @assigned_heading = @ballot&.heading_for_group(@heading.group)
+
       elsif @budget.single_heading?
         @heading = @budget.headings.first
       end
