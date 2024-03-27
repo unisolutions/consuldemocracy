@@ -23,10 +23,33 @@
             </div>
             <br>
 
-            <% @budget.headings.order(:id).each do |heading| %>
-              <% group_name = heading.group.name %>
-              <%= link_to "#{group_name}: #{heading.name} ", budget_investments_path(@budget, heading_id: heading.id), class: "button" %>
-            <% end %>
+
+            <div class="group-headings-container">
+              <% @budget.groups.order(:id).each do |group| %>
+                <div class="group-container">
+                  <%= link_to group.name, "#", class: "group-button button", data: { group_id: group.id }, style: "background-color: darkblue; color: white;" %>
+                  <div class="headings-container" id="group_<%= group.id %>_headings" style="display: none;">
+                    <% group.headings.order(:id).each do |heading| %>
+                      <%= link_to "#{heading.name}", budget_investments_path(@budget, heading_id: heading.id), class: "heading-button button" %>
+                    <% end %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+
+
+            <!--    <%# @budget.groups.order(:id).each do |group| %>
+              <%#= group.name %>
+            <%# end %>
+
+            <%# @budget.groups.first.headings.order(:id).each do |group| %>
+              <%#= group.name %>
+            <%# end %>-->
+            <!-- <%# @budget.headings.order(:id).each do |heading| %>
+              <%# group_name = heading.group.name %>
+              <%#= link_to "#{group_name}: #{heading.name} ", budget_investments_path(@budget, heading_id: heading.id), class: "button" %>
+            <%# end %>
+-->
 
             <% if @ballot.valid_heading?(@heading) %>
               <div class="progress-bar-nav" data-fixed-bar>
@@ -84,3 +107,65 @@
     </div>
   </div>
 <% end %>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Function to toggle visibility of heading containers
+    function toggleHeadingVisibility(groupId) {
+      var selectedHeadingsContainer = document.getElementById("group_" + groupId + "_headings");
+      var isCurrentlyVisible = selectedHeadingsContainer.style.display === "block";
+
+      // Store the current scroll position
+      var scrollPosition = window.pageYOffset;
+
+      // Toggle visibility of the headings container only if it's currently hidden
+      if (!isCurrentlyVisible) {
+        selectedHeadingsContainer.style.display = "block";
+
+        // Hide all other headings containers
+        document.querySelectorAll(".headings-container").forEach(function(container) {
+          if (container.id !== "group_" + groupId + "_headings") {
+            container.style.display = "none";
+          }
+        });
+      }
+
+      // Restore the scroll position after toggling visibility
+      window.scrollTo(0, scrollPosition);
+    }
+
+    // Add event listener to the document for handling click events on group buttons
+    document.addEventListener("click", function(event) {
+      var target = event.target;
+
+      // Check if the clicked element is a group button
+      if (target.matches(".group-button")) {
+        var groupId = target.dataset.groupId;
+        toggleHeadingVisibility(groupId);
+      }
+
+      // Prevent click events on heading buttons from bubbling up to parent elements
+      if (target.matches(".heading-button")) {
+        event.stopPropagation();
+      }
+    });
+
+    // Check URL parameters for heading ID and show corresponding headings container
+    var urlParams = new URLSearchParams(window.location.search);
+    var headingId = urlParams.get("heading_id");
+    if (headingId) {
+      var groupButton = document.querySelector(".group-button[data-group-id='" + headingId + "']");
+      if (groupButton) {
+        toggleHeadingVisibility(headingId);
+      }
+    }
+  });
+</script>
+
+
+
+
+
+
+
+
