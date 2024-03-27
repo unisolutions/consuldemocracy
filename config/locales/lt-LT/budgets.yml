@@ -21,7 +21,7 @@ lt:
           approval:
             one: "Galite balsuoti už <span>1</span> projektą."
             other: "Galite balsuoti už iki <span>%{count}</span> projektų."
-        no_balloted_group_yet: "Dar nėra balsuota už šią grupę, balsuokite!"
+        no_balloted_group_yet: "Dar nebalsavote už šią kategoriją, balsuokite!"
         remove: Pašalinti balsą
         remove_label: "Pašalinti savo balsą iš %{investment}"
         voted:
@@ -107,7 +107,7 @@ lt:
           different_heading_assigned: "Turite aktyvių balsų kitame skyriuje: %{heading_link}"
           change_ballot: "Jei pakeisite nuomonę, galite pašalinti savo balsus iš %{check_ballot} ir pradėti iš naujo."
           check_ballot_link: "pateikti savo balsavimą"
-          zero: Jūs nepridėjote jokios investicinės veiklos šioje grupėje.
+          zero: Jūs nepridėjote jokios investicinės veiklos šioje kategorijoje.
           verified_only: "Norėdami sukurti naują biudžeto investiciją, %{verify}."
           create: "Kurti biudžeto investiciją"
           not_logged_in: "Norėdami sukurti naują biudžeto investiciją turite %{sign_in}."
