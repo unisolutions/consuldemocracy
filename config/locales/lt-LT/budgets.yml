@@ -86,7 +86,7 @@ lt:
         title: Dalyvaujamoji biudžetavimo procedūra
         unfeasible: Neįgyvendinami investiciniai projektai
         unfeasible_text: "Investicijos turi atitikti tam tikras sąlygas (teisėtumą, konkretumą, neviršyti biudžeto ribų), kad būtų laikomos įgyvendinamomis ir galėtų pereiti į galutinio balsavimo etapą. Visos investicijos, nesilaikančios šių kriterijų, pažymėtos kaip neįgyvendinamos ir paskelbiamos toliau sąraše kartu su jų neįgyvendinamumo ataskaita."
-        by_heading: "Investiciniai projektai su apimtimi: %{heading}"
+        by_heading: "Investicinio projekto vieta: %{heading}"
         search_form:
           button: Ieškoti
           placeholder: Ieškoti investicinių projektų...

@@ -1,7 +1,6 @@
 <% if @heading.present? %>
   <section class="no-margin-top margin-bottom">
     <div class="expanded jumbo-budget budget-heading padding">
-
       <div class="row">
         <div class="small-12 column">
           <%= back_link_to budget_path(@budget) %>
@@ -23,7 +22,6 @@
             </div>
             <br>
 
-
             <div class="group-headings-container">
               <% @budget.groups.order(:id).each do |group| %>
                 <div class="group-container">
@@ -39,19 +37,28 @@
 
             <% if @ballot.valid_heading?(@heading) %>
               <div class="progress-bar-nav" data-fixed-bar>
-                <h2>
-                  <%= t("budgets.investments.index.by_heading", heading: @heading.name) %>
-                </h2>
+                <div class="group-heading">
+                  <h2 class="group-name">
+                    <%= "Kategorija: #{@heading.group.name}" %>
+                  </h2>
+                  <h3 class="heading-name">
+                    <%= t("budgets.investments.index.by_heading", heading: @heading.name) %>
+                  </h3>
+                </div>
 
                 <div id="progress_bar">
                   <%= render "budgets/ballot/progress_bar", ballot: @ballot, heading: @heading %>
                 </div>
-
               </div>
             <% else %>
-              <h2>
-                <%= t("budgets.investments.index.by_heading", heading: @heading.name) %>
-              </h2>
+              <div class="group-heading">
+                <h2 class="group-name">
+                  <%= "Kategorija: #{@heading.group.name}" %>
+                </h2>
+                <h3 class="heading-name">
+                  <%= t("budgets.investments.index.by_heading", heading: @heading.name) %>
+                </h3>
+              </div>
               <div class="small-12 medium-9">
                 <div class="callout warning margin-top">
                   <%= sanitize(t("budgets.investments.header.different_heading_assigned",
@@ -66,9 +73,14 @@
               </div>
             <% end %>
           <% else %>
-            <h2 class="margin-top">
-              <%= t("budgets.investments.index.by_heading", heading: @heading.name) %>
-            </h2>
+            <div class="group-heading">
+              <h2 class="group-name">
+                <%= "Kategorija: #{@heading.group.name}" %>
+              </h2>
+              <h3 class="heading-name">
+                <%= t("budgets.investments.index.by_heading", heading: @heading.name) %>
+              </h3>
+            </div>
             <% if @budget.show_money? %>
               <h3>
                 <span class="tagline"><%= t("budgets.investments.header.price") %></span>
@@ -96,7 +108,8 @@
 
 <script>
   // Function to toggle visibility of heading containers
-  function toggleHeadingVisibility(groupId) {
+  // Function to toggle visibility of heading containers
+  function toggleHeadingVisibility(groupId, groupName, headingName) {
     const selectedHeadingsContainer = document.getElementById(`group_${groupId}_headings`);
     const isCurrentlyVisible = selectedHeadingsContainer.style.display === "block";
 
@@ -110,11 +123,14 @@
       }
     });
 
-    // If the container was previously hidden, scroll to it
-    if (!isCurrentlyVisible) {
-      selectedHeadingsContainer.scrollIntoView({behavior: 'smooth'});
+    // Update the group name and heading name display if progress bar is rendered
+    const progressBar = document.getElementById("progress_bar");
+    if (progressBar) {
+      document.querySelector(".group-name").textContent = groupName;
+      document.querySelector(".heading-name").textContent = headingName;
     }
   }
+
 
   // Add event listener to the document for handling click events on group buttons
   document.addEventListener("click", function (event) {
@@ -123,8 +139,18 @@
     // Check if the clicked element is a group button
     if (target.matches(".group-button")) {
       const groupId = target.dataset.groupId;
+      const groupName = target.textContent.trim(); // Get the group name from the button text
 
-      toggleHeadingVisibility(groupId);
+      toggleHeadingVisibility(groupId, groupName, "");
+    }
+
+    // Check if the clicked element is a heading button
+    if (target.matches(".heading-button")) {
+      const headingName = target.textContent.trim(); // Get the heading name from the button text
+      const groupId = target.closest(".group-container").querySelector(".group-button").dataset.groupId;
+      const groupName = target.closest(".group-container").querySelector(".group-button").textContent.trim();
+
+      toggleHeadingVisibility(groupId, groupName, headingName);
     }
 
     // Prevent click events on heading buttons from bubbling up to parent elements
@@ -139,7 +165,13 @@
   if (headingId) {
     const groupButton = document.querySelector(`.group-button[data-group-id='${headingId}']`);
     if (groupButton) {
-      toggleHeadingVisibility(headingId);
+      const groupName = groupButton.textContent.trim(); // Get the group name from the button text
+      const headingName = document.querySelector(`.heading-button[data-group-id='${headingId}']`).textContent.trim(); // Get the heading name from the button text
+
+      toggleHeadingVisibility(headingId, groupName, headingName);
     }
   }
+
 </script>
+
+
