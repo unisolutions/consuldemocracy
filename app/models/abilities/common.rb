@@ -103,7 +103,7 @@ module Abilities
             votable_type: "Budget::Investment",
             votable: { budget: { phase: "selecting" } }
 
-        if user.district_citizen
+        if user.district_citizen && user.age > 17
           can [:show, :create], Budget::Ballot, budget: { phase: "balloting" }
           can [:create, :destroy], Budget::Ballot::Line, budget: { phase: "balloting" }
         end

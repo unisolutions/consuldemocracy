@@ -83,6 +83,12 @@
     <%= f.check_box :show_investments, checked: @budget.show_investments, label: "Rodyti investicijas vartotojams" %>
   </fieldset>
 
+  <fieldset>
+    <legend><%= "Viešinti autorius" %></legend>
+    <p class="form-label"></p>
+    <%= f.check_box :show_authors, checked: @budget.show_authors, label: "Autoriai viešai matomi" %>
+  </fieldset>
+
   <% unless wizard? %>
     <%= render "admin/shared/show_results_fields", form: f %>
   <% end %>
@@ -93,7 +99,7 @@
       <% if wizard? %>
         <%= f.submit t("admin.budgets_wizard.budgets.continue"), class: "button success expanded" %>
       <% else %>
-        <%= f.submit nil, class: "button success" %>
+        <%= f.submit "Atnaujinti biudžetą", class: "button success" %>
       <% end %>
     </div>
   </div>

@@ -68,6 +68,7 @@ class Admin::BudgetsController < Admin::BaseController
         :voting_style,
         :hide_money,
         :show_investments,
+        :show_authors,
         administrator_ids: [],
         valuator_ids: [],
         image_attributes: image_attributes,

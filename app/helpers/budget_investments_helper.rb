@@ -3,6 +3,14 @@ module BudgetInvestmentsHelper
     params.map { |af| t("admin.budget_investments.index.filters.#{af}") }.join(", ")
   end
 
+  def display_author_name(investment)
+    if investment.budget.show_authors?
+      investment.author.name
+    else
+      "Pilietis"
+    end
+  end
+
   def link_to_investments_sorted_by(column)
     direction = set_direction(params[:direction])
     icon = set_sorting_icon(direction, column)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_03_25_093950) do
+ActiveRecord::Schema.define(version: 2024_03_27_173500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -406,6 +406,7 @@ ActiveRecord::Schema.define(version: 2024_03_25_093950) do
     t.boolean "published"
     t.boolean "hide_money", default: false
     t.boolean "show_investments", default: false
+    t.boolean "show_authors", default: false
   end
 
   create_table "campaigns", id: :serial, force: :cascade do |t|
