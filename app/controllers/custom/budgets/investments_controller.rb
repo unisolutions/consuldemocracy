@@ -140,7 +140,7 @@ module Budgets
 
     def load_heading
       if params[:group_id].present?
-        @heading = @budget.headings.find_by_slug_or_id! 9
+        @heading = @budget.headings.find_by_slug_or_id! @budget.headings.first.id
         @assigned_heading = @ballot&.heading_for_group(@heading.group)
       else
         if params[:heading_id].present?
