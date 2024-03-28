@@ -366,9 +366,10 @@ class Budget
       budget.formatted_amount(price)
     end
 
-    def self.apply_filters_and_search(_budget, params, current_filter = nil)
+    def self.apply_filters_and_search(_budget, params, current_filter = nil, group_id = nil)
       investments = all
       investments = investments.send(current_filter)             if current_filter.present?
+      investments = investments.by_group(group_id) if group_id.present?  # Filter by group_id
       investments = investments.by_heading(params[:heading_id])  if params[:heading_id].present?
       investments = investments.search(params[:search])          if params[:search].present?
       investments = investments.filter_by(params[:advanced_search])

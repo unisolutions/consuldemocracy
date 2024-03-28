@@ -138,14 +138,17 @@ module Budgets
       @ballot = @budget.balloting? ? query.first_or_create! : query.first_or_initialize
     end
 
-
     def load_heading
-      if params[:heading_id].present?
-        @heading = @budget.headings.find_by_slug_or_id! params[:heading_id]
+      if params[:group_id].present?
+        @heading = @budget.headings.find_by_slug_or_id! 9
         @assigned_heading = @ballot&.heading_for_group(@heading.group)
-
-      elsif @budget.single_heading?
-        @heading = @budget.headings.first
+      else
+        if params[:heading_id].present?
+          @heading = @budget.headings.find_by_slug_or_id! params[:heading_id]
+          @assigned_heading = @ballot&.heading_for_group(@heading.group)
+        elsif @budget.single_heading?
+          @heading = @budget.headings.first
+        end
       end
     end
 
@@ -166,7 +169,8 @@ module Budgets
     end
 
     def investments_with_filters
-      @budget.investments.apply_filters_and_search(@budget, params, @current_filter)
+      group_id = params[:group_id] # Retrieve the group_id from params
+      @budget.investments.apply_filters_and_search(@budget, params, @current_filter, group_id)
     end
 
     def investments

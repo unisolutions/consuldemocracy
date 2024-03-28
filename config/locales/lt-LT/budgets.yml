@@ -25,8 +25,8 @@ lt:
         remove: Pašalinti balsą
         remove_label: "Pašalinti savo balsą iš %{investment}"
         voted:
-          one: "Balsavote už <span>vieną</span> investiciją."
-          other: "Balsavote už <span>%{count}</span> investicijas."
+          one: "Balsavote už <span>vieną</span> idėją."
+          other: "Balsavote už <span>%{count}</span> idėjas."
         voted_info: "Jūsų balsas patvirtintas!"
         voted_info_2: "Tačiau galite pakeisti savo balsą bet kuriuo metu iki šios fazės uždarymo."
         zero: Jūs neprisidėjote prie jokių investicinių projektų.
@@ -35,7 +35,7 @@ lt:
         not_selected: Neišrinkti investiciniai projektai negali būti palaikomi
         not_enough_money: "Jūs jau priskyrėte prieinamas lėšas.<br><small>Prisiminkite, kad galite %{change_ballot} bet kuriuo metu</small>"
         no_ballots_allowed: Pasirinkimo etapas uždarytas
-        different_heading_assigned: "Jūs jau balsavote už kitą antraštę: %{heading_link}"
+        different_heading_assigned: "Jūs jau balsavote už kitą vietą: %{heading_link}"
         not_enough_available_votes: "Pasiekėte leidžiamą balsų skaičių"
         change_ballot: pakeiskite savo balsus
         casted_offline: Jūs jau dalyvavote neprisijungę

@@ -2,10 +2,13 @@
   <div class="row margin-top">
     <div class="small-12 medium-6 large-4 small-centered column margin-top">
       <% if budget.phase == "balloting" %>
-        <%= link_to t("budgets.investments_list.see_all"),
-                    budget_investments_path(budget.id, heading_id: budget.headings.first.id),
+        <%= link_to "Balsuok!",
+                    budget_investments_path(budget.id, group_id: budget.groups.first.id),
                     class: "button expanded" %>
-      <% else %>
+
+        <%#= link_to group.name, budget_investments_path(@budget, group_id: group.id, group_name: group.name), class: "group-button button", style: "background-color: darkblue; color: white;" %>
+
+    <% else %>
         <%= link_to t("budgets.investments_list.see_all"),
                     see_all_path,
                     class: "button expanded" %>
