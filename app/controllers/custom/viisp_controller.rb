@@ -140,8 +140,8 @@ class ViispController < Devise::SessionsController
     when "0"
       false
     else
-      puts "Unexpected response: #{response.body}"
-      false
+      Rails.logger.error "Unexpected response: #{response.body}"
+      raise StandardError, "Unexpected response: #{response.body}"
     end
   rescue Faraday::ConnectionFailed => e
     puts "Error connecting to the server: #{e}"
