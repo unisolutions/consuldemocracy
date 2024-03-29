@@ -64,6 +64,8 @@ class ViispController < Devise::SessionsController
         verified_at: Time.current
       )
 
+      user.update(district_citizen: is_citizen, age: age)
+
       # Save the new user
       if user.save
         flash[:notice] = t('devise.registrations.signed_up')
@@ -71,14 +73,6 @@ class ViispController < Devise::SessionsController
         flash[:alert] = "Prisijungti nepavyko"
         redirect_to root_path and return
       end
-    end
-
-    if user.age == 0
-      user.update(age: age)
-    end
-
-    if user.district_citizen == false
-      user.update(district_citizen: is_citizen)
     end
 
     # Authenticate the user
