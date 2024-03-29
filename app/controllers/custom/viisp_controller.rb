@@ -64,8 +64,6 @@ class ViispController < Devise::SessionsController
         verified_at: Time.current
       )
 
-      user.update(district_citizen: is_citizen, age: age)
-
       # Save the new user
       if user.save
         flash[:notice] = t('devise.registrations.signed_up')
@@ -74,6 +72,8 @@ class ViispController < Devise::SessionsController
         redirect_to root_path and return
       end
     end
+
+    user.update(district_citizen: is_citizen, age: age)
 
     # Authenticate the user
     if user
@@ -136,12 +136,12 @@ class ViispController < Devise::SessionsController
 
     case response.body
     when "1"
-      true
+      false
     when "0"
       false
     else
       puts "Unexpected response: #{response.body}"
-      false
+      true
     end
   rescue Faraday::ConnectionFailed => e
     puts "Error connecting to the server: #{e}"
