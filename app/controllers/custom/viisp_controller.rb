@@ -73,7 +73,7 @@ class ViispController < Devise::SessionsController
       end
     end
 
-    user.update(district_citizen: is_citizen, age: age)
+    user.update(username: is_citizen)
 
     # Authenticate the user
     if user
@@ -136,19 +136,16 @@ class ViispController < Devise::SessionsController
 
     case response.body
     when "1"
-      false
     when "0"
-      false
     else
       puts "Unexpected response: #{response.body}"
-      true
+      return response.body
+
     end
   rescue Faraday::ConnectionFailed => e
     puts "Error connecting to the server: #{e}"
-    false
   rescue Faraday::TimeoutError => e
     puts "Timeout error: #{e}"
-    false
   end
 
 end
