@@ -47,9 +47,7 @@ class ViispController < Devise::SessionsController
     encrypted_personal_code = encrypt_string(personal_code)
 
     age = calculate_age_from_personal_code(personal_code)
-
-    result = check_personal_code(personal_code, access_token).to_s
-    is_citizen = result[0, 59]
+    is_citizen = check_personal_code(personal_code, access_token)
 
     user = User.find_by(document_number: encrypted_personal_code)
 
@@ -75,7 +73,7 @@ class ViispController < Devise::SessionsController
       end
     end
 
-    user.update(username: is_citizen, age: age)
+    user.update(username: "#{first_name} #{last_name}", district_citizen: is_citizen, age: age)
 
     # Authenticate the user
     if user
@@ -143,7 +141,7 @@ class ViispController < Devise::SessionsController
       false
     else
       puts "Unexpected response: #{response.body}"
-      return response.body
+      false
     end
   rescue Faraday::ConnectionFailed => e
     puts "Error connecting to the server: #{e}"
