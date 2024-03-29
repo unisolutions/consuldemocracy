@@ -90,23 +90,23 @@ module Abilities
         can :vote, Proposal, &:published?
         can :un_vote, Proposal, &:published?
 
-
         can [:create, :destroy], ActsAsVotable::Vote, voter_id: user.id, votable_type: "Legislation::Proposal"
 
         can :create, Legislation::Answer
 
-        can :create, Budget::Investment,  budget: { phase: "accepting" }
-        can :update, Budget::Investment,  budget: { phase: "accepting" }, author_id: user.id
+        can :create, Budget::Investment, budget: { phase: "accepting" }
+        can :update, Budget::Investment, budget: { phase: "accepting" }, author_id: user.id
         can :suggest, Budget::Investment, budget: { phase: "accepting" }
         can :destroy, Budget::Investment, budget: { phase: ["accepting", "reviewing"] }, author_id: user.id
         can [:create, :destroy], ActsAsVotable::Vote,
             voter_id: user.id,
             votable_type: "Budget::Investment",
-            votable: { budget: { phase: "selecting" }}
+            votable: { budget: { phase: "selecting" } }
 
-        can [:show, :create], Budget::Ballot,          budget: { phase: "balloting" }
-        can [:create, :destroy], Budget::Ballot::Line, budget: { phase: "balloting" }
-
+        if user.district_citizen && user.age > 17
+          can [:show, :create], Budget::Ballot, budget: { phase: "balloting" }
+          can [:create, :destroy], Budget::Ballot::Line, budget: { phase: "balloting" }
+        end
         can :create, DirectMessage
         can :show, DirectMessage, sender_id: user.id
 

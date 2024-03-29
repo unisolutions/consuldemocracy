@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_01_15_185045) do
+ActiveRecord::Schema.define(version: 2024_03_27_173500) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_trgm"
@@ -406,6 +406,7 @@ ActiveRecord::Schema.define(version: 2024_01_15_185045) do
     t.boolean "published"
     t.boolean "hide_money", default: false
     t.boolean "show_investments", default: false
+    t.boolean "show_authors", default: false
   end
 
   create_table "campaigns", id: :serial, force: :cascade do |t|
@@ -1659,6 +1660,8 @@ ActiveRecord::Schema.define(version: 2024_01_15_185045) do
     t.integer "failed_attempts", default: 0, null: false
     t.datetime "locked_at"
     t.string "unlock_token"
+    t.boolean "district_citizen", default: false
+    t.integer "age", default: 0
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["date_of_birth"], name: "index_users_on_date_of_birth"
     t.index ["email"], name: "index_users_on_email", unique: true
