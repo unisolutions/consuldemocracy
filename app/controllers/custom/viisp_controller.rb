@@ -29,7 +29,7 @@ class ViispController < Devise::SessionsController
 
   def callback
 
-    access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzE5Mi4xNjguMjAxLjkwIiwiaWF0IjoxNzA4NDE0Nzc1LCJuYmYiOjE3MDg0MTQ3NzUsImV4cCI6MTczODIzOTM4NCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNTQifX19.oKOPvlNSshn1_D4VjJFyOFn7UbyZOqxuBhfiksHgcaE"
+    access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzE5Mi4xNjguMjAxLjkwIiwiaWF0IjoxNzEwMzk3Nzg3LCJuYmYiOjE3MTAzOTc3ODcsImV4cCI6MTcxNTU4MTc4NywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNTQifX19.lXW1G09PaENt4MC87f5Wm_mBHHsPL1r_v3CMwLYuohM"
 
     ticket = params[:ticket]
     identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
