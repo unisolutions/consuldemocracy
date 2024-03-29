@@ -106,7 +106,7 @@ lt:
           change_vote_link: "pakeisti savo balsą"
           different_heading_assigned: "Turite aktyvių balsų kitame skyriuje: %{heading_link}"
           change_ballot: "Jei pakeisite nuomonę, galite pašalinti savo balsus iš %{check_ballot} ir pradėti iš naujo."
-          check_ballot_link: "pateikti savo balsavimą"
+          check_ballot_link: "pateikti balsus"
           zero: Jūs nepridėjote jokios investicinės veiklos šioje kategorijoje.
           verified_only: "Norėdami sukurti naują biudžeto investiciją, %{verify}."
           create: "Kurti biudžeto investiciją"
@@ -155,10 +155,10 @@ lt:
           other: "%{count} palaikymų"
           zero: Nėra palaikymų
       header:
-        check_ballot: "Pateikti savo balsavimą"
+        check_ballot: "Pateikti balsus"
         different_heading_assigned: "Jūs turite aktyvių balsų kitame skyriuje: %{heading_link}"
         change_ballot: "Jei pakeisite nuomonę, galite pašalinti savo balsus iš %{check_ballot} ir pradėti iš naujo."
-        check_ballot_link: "pateikti savo balsavimą"
+        check_ballot_link: "pateikti balsus"
         price: "Visas biudžetas"
       votes:
         already_supported: "Jūs jau palaikėte šį investicinį projektą. Pasidalinkite juo!"

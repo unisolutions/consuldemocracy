@@ -9,6 +9,7 @@ module Budgets
     include MapLocationAttributes
     include Translatable
 
+
     PER_PAGE = 10
 
     before_action :authenticate_user!, except: [:index, :show]
@@ -37,6 +38,7 @@ module Budgets
 
     helper_method :resource_model, :resource_name
     respond_to :html, :js
+
 
     def index
       @investments = investments.page(params[:page]).per(PER_PAGE).for_render

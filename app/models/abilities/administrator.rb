@@ -70,6 +70,9 @@ module Abilities
         budget.balloting_finished? && budget.has_winning_investments?
       end
 
+      can [:show, :create], Budget::Ballot, budget: { phase: "balloting" }
+      can [:create, :destroy], Budget::Ballot::Line, budget: { phase: "balloting" }
+
       can [:read, :create, :update, :destroy], Budget::Group
       can [:read, :create, :update, :destroy], Budget::Heading
       can [:hide, :admin_update, :toggle_selection], Budget::Investment

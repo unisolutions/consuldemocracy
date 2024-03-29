@@ -7,9 +7,9 @@
     <h2>
       <%= sanitize(t("budgets.ballots.show.voted", count: ballot.investments.count)) %>
     </h2>
-    <p class="confirmed">
-      <%= t("budgets.ballots.show.voted_info") %>
-    <p>
+    <!--    <p class="confirmed">-->
+    <%#= t("budgets.ballots.show.voted_info") %>
+    <!--    <p>-->
     <p><%= t("budgets.ballots.show.voted_info_2") %></p>
   </div>
 </header>
@@ -25,15 +25,15 @@
           </h3>
           <%#= link_to sanitize(ballot.amount_available_info(heading)), group_path(group) %>
         </div>
-        <% if ballot.has_lines_in_group?(group) %>
+        <!--     <%# if ballot.has_lines_in_group?(group) %>
           <h4 class="amount-spent text-right">
-            <%= sanitize(ballot.amount_spent_info(heading)) %>
+            <%#= sanitize(ballot.amount_spent_info(heading)) %>
           </h4>
-        <% else %>
+        <%# else %>
           <p>
-            <%= t("budgets.ballots.show.zero") %><br>
+            <%#= t("budgets.ballots.show.zero") %><br>
           </p>
-        <% end %>
+        <%# end %>-->
 
         <ul class="ballot-list">
           <%= render Budgets::Ballot::InvestmentComponent.with_collection(
@@ -51,7 +51,7 @@
           <h3>
             <%= group.name %>
           </h3>
-          <%= link_to t("budgets.ballots.show.no_balloted_group_yet"), group_path(group) %>
+          <%= link_to t("budgets.ballots.show.no_balloted_group_yet"), budget_investments_path(budget.id, group_id: group.id, group_name: group.name) %>
         </div>
       </div>
     </div>
