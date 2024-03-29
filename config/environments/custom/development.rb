@@ -8,5 +8,5 @@ Rails.application.configure do
   config.base_url = 'http://212.24.109.28:3000'
   config.viisp_test = true
 
-  config.krs_endpoint = 'http://195.182.94.66:8888/wp-json/krsapi/v1'
+  config.krs_endpoint = 'http://195.182.94.66:8888'
 end

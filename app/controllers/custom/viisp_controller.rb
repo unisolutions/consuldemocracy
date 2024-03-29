@@ -46,6 +46,8 @@ class ViispController < Devise::SessionsController
 
     encrypted_personal_code = encrypt_string(personal_code)
 
+    access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzE5Mi4xNjguMjAxLjkwIiwiaWF0IjoxNzEwMzk3Nzg3LCJuYmYiOjE3MTAzOTc3ODcsImV4cCI6MTcxNTU4MTc4NywiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNTQifX19.lXW1G09PaENt4MC87f5Wm_mBHHsPL1r_v3CMwLYuohM"
+    # access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzE5Mi4xNjguMjAxLjkwIiwiaWF0IjoxNzA4NDE0Nzc1LCJuYmYiOjE3MDg0MTQ3NzUsImV4cCI6MTczODIzOTM4NCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNTQifX19.oKOPvlNSshn1_D4VjJFyOFn7UbyZOqxuBhfiksHgcaE"
     age = calculate_age_from_personal_code(personal_code)
     is_citizen = check_personal_code(personal_code, access_token)
 
@@ -132,7 +134,7 @@ class ViispController < Devise::SessionsController
       faraday.adapter Faraday.default_adapter
     end
 
-    response = conn.get("/tikrinti/?asmensKodas=#{personal_code}")
+    response = conn.get("/wp-json/krsapi/v1/tikrinti/?asmensKodas=#{personal_code}")
 
     case response.body
     when "1"
