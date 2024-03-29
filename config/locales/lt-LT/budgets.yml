@@ -25,14 +25,15 @@ lt:
         remove: Pašalinti balsą
         remove_label: "Pašalinti savo balsą iš %{investment}"
         voted:
+          zero: "Balsavote už <span>nulį</span> idėjų."
           one: "Balsavote už <span>vieną</span> idėją."
           other: "Balsavote už <span>%{count}</span> idėjas."
         voted_info: "Jūsų balsas patvirtintas!"
-        voted_info_2: "Tačiau galite pakeisti savo balsą bet kuriuo metu iki šios fazės uždarymo."
-        zero: Jūs neprisidėjote prie jokių investicinių projektų.
+        voted_info_2: "Tačiau galite pakeisti savo balsą bet kuriuo metu iki balsavimo etapo uždarymo."
+        zero: Jūs neprisidėjote prie jokių idėjų.
       reasons_for_not_balloting:
-        not_verified: Tik patvirtinti vartotojai gali balsuoti už investicijas; %{verify_account}.
-        not_selected: Neišrinkti investiciniai projektai negali būti palaikomi
+        not_verified: Tik patvirtinti vartotojai gali balsuoti už idėjas; %{verify_account}.
+        not_selected: Neišrinktos idėjos negali būti palaikomos
         not_enough_money: "Jūs jau priskyrėte prieinamas lėšas.<br><small>Prisiminkite, kad galite %{change_ballot} bet kuriuo metu</small>"
         no_ballots_allowed: Pasirinkimo etapas uždarytas
         different_heading_assigned: "Jūs jau balsavote už kitą vietą: %{heading_link}"
@@ -64,7 +65,7 @@ lt:
       next_phase: Kitas etapas
       prev_phase: Ankstesnis etapas
       current_phase: Esamas etapas
-      map: Investicijų projektų geografinis išdėstymas biudžete
+      map: Idėjų geografinis išdėstymas biudžete
       finished_budgets: Baigti dalyvaujamieji biudžetai
       see_results: Rodyti rezultatus
       section_footer:
@@ -73,7 +74,7 @@ lt:
       milestones: Etapai
     investments:
       form:
-        title: "Kurti biudžeto investiciją"
+        title: "Kurti biudžeto idėja"
         subtitle: "%{heading} (%{price})"
         subtitle_without_price: "%{heading}"
         tag_category_label: "Kategorijos"
@@ -84,12 +85,12 @@ lt:
         map_location_instructions: "Naviguokite žemėlapyje iki vietos ir pažymėkite ją žymekliu."
       index:
         title: Dalyvaujamoji biudžetavimo procedūra
-        unfeasible: Neįgyvendinami investiciniai projektai
-        unfeasible_text: "Investicijos turi atitikti tam tikras sąlygas (teisėtumą, konkretumą, neviršyti biudžeto ribų), kad būtų laikomos įgyvendinamomis ir galėtų pereiti į galutinio balsavimo etapą. Visos investicijos, nesilaikančios šių kriterijų, pažymėtos kaip neįgyvendinamos ir paskelbiamos toliau sąraše kartu su jų neįgyvendinamumo ataskaita."
-        by_heading: "Investicinio projekto vieta: %{heading}"
+        unfeasible: Neįgyvendinamos idėjos
+        unfeasible_text: "Idėjos turi atitikti tam tikras sąlygas (teisėtumą, konkretumą, neviršyti biudžeto ribų), kad būtų laikomos įgyvendinamomis ir galėtų pereiti į galutinio balsavimo etapą. Visos investicijos, nesilaikančios šių kriterijų, pažymėtos kaip neįgyvendinamos ir paskelbiamos toliau sąraše kartu su jų neįgyvendinamumo ataskaita."
+        by_heading: "Idėjos vieta: %{heading}"
         search_form:
           button: Ieškoti
-          placeholder: Ieškoti investicinių projektų...
+          placeholder: Ieškoti idėjų...
           title: Paieška
         sidebar:
           my_ballot: Mano balsai
@@ -108,7 +109,7 @@ lt:
           change_ballot: "Jei pakeisite nuomonę, galite pašalinti savo balsus iš %{check_ballot} ir pradėti iš naujo."
           check_ballot_link: "pateikti balsus"
           zero: Jūs nepridėjote jokios investicinės veiklos šioje kategorijoje.
-          verified_only: "Norėdami sukurti naują biudžeto investiciją, %{verify}."
+          verified_only: "Norėdami sukurti naują biudžeto idėją, %{verify}."
           create: "Kurti biudžeto investiciją"
           not_logged_in: "Norėdami sukurti naują biudžeto investiciją turite %{sign_in}."
         filter: "Filtruojama pagal projektus"
@@ -203,15 +204,15 @@ lt:
       discarded: "Atmestas projektas: "
       incompatibles: Nesuderinami
       investment_title: Projekto pavadinimas
-      investment_proyects: Visų investicinių projektų sąrašas
-      unfeasible_investment_proyects: Visų neįgyvendinamų investicinių projektų sąrašas
-      not_selected_investment_proyects: Visų investicinių projektų, kurie nepasirinkti galutiniam balsavimui, sąrašas
+      investment_proyects: Visų idėjų sąrašas
+      unfeasible_investment_proyects: Visų neįgyvendinamų idėjų sąrašas
+      not_selected_investment_proyects: Visų idėjų, kurios nepasirinktos galutiniam balsavimui, sąrašas
     executions:
       link: Etapai
       page_title: "%{budget} - Etapai"
       heading: "Dalyvaujamųjų biudžetų etapai"
       heading_selection_title: "Pagal rajoną"
-      no_winner_investments: "Šiame etape nėra laimėtojų investicijų"
+      no_winner_investments: "Šiame etape nėra laimėtojų idėjų"
       filters:
         status:
           label: "Projekto dabartinė būsena"
