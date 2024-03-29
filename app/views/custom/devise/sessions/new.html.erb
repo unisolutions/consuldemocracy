@@ -11,15 +11,6 @@
 <!--</p>-->
 
 
-<div class="small-12 medium-6 small-centered">
-  <p style="text-align: center; color: red; font-weight: bold;">
-    Prisijungti naudojantis elektroniniais valdžios vartais
-  </p>
-
-  <%= link_to viisp_authenticate_path, class: "button expanded" do %>
-    <%= "Prisijungti" %>
-  <% end %>
-</div>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
   <div class="row">

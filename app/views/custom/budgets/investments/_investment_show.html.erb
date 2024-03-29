@@ -1,10 +1,10 @@
 <% provide :social_media_meta_tags do %>
-<%= render "shared/social_media_meta_tags",
-           social_url: budget_investments_path(investment),
-           social_title: investment.title,
-           social_description: investment.description,
-           twitter_image_url: (investment.image.present? ? polymorphic_path(investment.image.variant(:thumb)) : nil),
-           og_image_url: (investment.image.present? ? polymorphic_path(investment.image.variant(:thumb)) : nil) %>
+  <%= render "shared/social_media_meta_tags",
+             social_url: budget_investments_path(investment),
+             social_title: investment.title,
+             social_description: investment.description,
+             twitter_image_url: (investment.image.present? ? polymorphic_path(investment.image.variant(:thumb)) : nil),
+             og_image_url: (investment.image.present? ? polymorphic_path(investment.image.variant(:thumb)) : nil) %>
 <% end %>
 
 <section class="budget-investment-show" id="<%= dom_id(investment) %>">
@@ -20,7 +20,13 @@
               investment.author,
               Flag.flagged?(current_user, investment)] do %>
       <div class="small-12 medium-9 column">
-        <%= back_link_to budget_investments_path(investment.budget, heading_id: investment.heading) %>
+        <% if @budget.phase == "balloting" %>
+          <% investment_group_id = investment.heading.group_id %>
+          <% investment_group_name = investment.heading.group.name %>
+          <%= back_link_to budget_investments_path(investment.budget, group_id: investment_group_id, group_name: investment_group_name) %>
+      <% else %>
+          <%= back_link_to budget_investments_path(investment.budget, heading_id: investment.heading) %>
+        <% end %>
 
         <%= render "/budgets/investments/investment_detail", investment: investment %>
       </div>
@@ -81,11 +87,11 @@
       <% else %>
         <!-- <br>
      <div class="float-right">-->
-<!--          <span class="label-budget-investment float-left">-->
-            <%#= t("budgets.investments.show.title") %>
-<!--          </span>-->
-<!--          <span class="icon-budget"></span>-->
-<!--        </div>-->
+        <!--          <span class="label-budget-investment float-left">-->
+        <%#= t("budgets.investments.show.title") %>
+        <!--          </span>-->
+        <!--          <span class="icon-budget"></span>-->
+        <!--        </div>-->
       <% end %>
       <% if investment.should_show_price? %>
         <div class="sidebar-divider"></div>
@@ -126,6 +132,6 @@
 
       <%= render "communities/access_button", community: investment.community %>
 
-     </aside>
+    </aside>
   </div>
 </section>

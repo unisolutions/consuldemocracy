@@ -9,6 +9,7 @@ module Budgets
     include MapLocationAttributes
     include Translatable
 
+
     PER_PAGE = 10
 
     before_action :authenticate_user!, except: [:index, :show]
@@ -38,6 +39,7 @@ module Budgets
     helper_method :resource_model, :resource_name
     respond_to :html, :js
 
+
     def index
       @investments = investments.page(params[:page]).per(PER_PAGE).for_render
       @investment_ids = @investments.ids
@@ -62,7 +64,7 @@ module Budgets
       @investment.author = current_user
       @investment.heading = @budget.headings.first if @budget.single_heading?
 
-       if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
+      if params[:budget_investment][:user_email].present? && params[:budget_investment][:user_phone_number].present?
         current_user.update(
           email: params[:budget_investment][:user_email],
           phone_number: params[:budget_investment][:user_phone_number]
@@ -139,11 +141,16 @@ module Budgets
     end
 
     def load_heading
-      if params[:heading_id].present?
-        @heading = @budget.headings.find_by_slug_or_id! params[:heading_id]
+      if params[:group_id].present?
+        @heading = @budget.headings.find_by_slug_or_id! @budget.headings.first.id
         @assigned_heading = @ballot&.heading_for_group(@heading.group)
-      elsif @budget.single_heading?
-        @heading = @budget.headings.first
+      else
+        if params[:heading_id].present?
+          @heading = @budget.headings.find_by_slug_or_id! params[:heading_id]
+          @assigned_heading = @ballot&.heading_for_group(@heading.group)
+        elsif @budget.single_heading?
+          @heading = @budget.headings.first
+        end
       end
     end
 
@@ -164,7 +171,8 @@ module Budgets
     end
 
     def investments_with_filters
-      @budget.investments.apply_filters_and_search(@budget, params, @current_filter)
+      group_id = params[:group_id] # Retrieve the group_id from params
+      @budget.investments.apply_filters_and_search(@budget, params, @current_filter, group_id)
     end
 
     def investments

@@ -28,6 +28,9 @@ class ViispController < Devise::SessionsController
   end
 
   def callback
+
+    access_token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczovLzE5Mi4xNjguMjAxLjkwIiwiaWF0IjoxNzA4NDE0Nzc1LCJuYmYiOjE3MDg0MTQ3NzUsImV4cCI6MTczODIzOTM4NCwiZGF0YSI6eyJ1c2VyIjp7ImlkIjoiNTQifX19.oKOPvlNSshn1_D4VjJFyOFn7UbyZOqxuBhfiksHgcaE"
+
     ticket = params[:ticket]
     identity = VIISP::Auth.identity(ticket: ticket, include_source_data: true)
     back_url = identity["custom_data"]
@@ -43,6 +46,9 @@ class ViispController < Devise::SessionsController
 
     encrypted_personal_code = encrypt_string(personal_code)
 
+    age = calculate_age_from_personal_code(personal_code)
+    is_citizen = check_personal_code(personal_code, access_token)
+
     user = User.find_by(document_number: encrypted_personal_code)
 
     if user.nil?
@@ -52,6 +58,8 @@ class ViispController < Devise::SessionsController
         document_number: encrypted_personal_code,
         password: Devise.friendly_token[0, 20],
         terms_of_service: "1",
+        age: age,
+        district_citizen: is_citizen,
         confirmed_at: Time.current,
         verified_at: Time.current
       )
@@ -63,6 +71,14 @@ class ViispController < Devise::SessionsController
         flash[:alert] = "Prisijungti nepavyko"
         redirect_to root_path and return
       end
+    end
+
+    if user.age == 0
+      user.update(age: age)
+    end
+
+    if user.district_citizen == false
+      user.update(district_citizen: is_citizen)
     end
 
     # Authenticate the user
@@ -81,6 +97,64 @@ class ViispController < Devise::SessionsController
     sha256_hash = Digest::SHA256.hexdigest(input)
     truncated_hash = sha256_hash[0, 14]
     return truncated_hash.upcase
+  end
+
+  def calculate_age_from_personal_code(personal_code)
+    begin
+      # Extracting the birth year, month, and day from the personal code
+      birth_year_prefix = personal_code[0].to_i
+      return 0 unless (1..6).include?(birth_year_prefix)
+
+      birth_year = case birth_year_prefix
+                   when 1, 2
+                     1800 + personal_code[1, 2].to_i
+                   when 3, 4
+                     1900 + personal_code[1, 2].to_i
+                   when 5, 6
+                     2000 + personal_code[1, 2].to_i
+                   end
+
+      month = personal_code[3, 2].to_i
+      day = personal_code[5, 2].to_i
+
+      # Parsing the birthdate
+      birthdate = Date.new(birth_year, month, day)
+
+      # Calculating the age based on the birthdate and the current date
+      current_date = Date.today
+      age = current_date.year - birthdate.year
+      age -= 1 if current_date.month < birthdate.month || (current_date.month == birthdate.month && current_date.day < birthdate.day)
+      age >= 0 ? age : 0
+    rescue ArgumentError => e
+      puts "Error: #{e.message}"
+      0
+    end
+  end
+
+  def check_personal_code(personal_code, access_token)
+    conn = Faraday.new(url: Rails.configuration.krs_endpoint) do |faraday|
+      faraday.request :url_encoded
+      faraday.headers['Authorization'] = "Bearer #{access_token}" if access_token
+      faraday.adapter Faraday.default_adapter
+    end
+
+    response = conn.get("/tikrinti/?asmensKodas=#{personal_code}")
+
+    case response.body
+    when "1"
+      true
+    when "0"
+      false
+    else
+      puts "Unexpected response: #{response.body}"
+      false
+    end
+  rescue Faraday::ConnectionFailed => e
+    puts "Error connecting to the server: #{e}"
+    false
+  rescue Faraday::TimeoutError => e
+    puts "Timeout error: #{e}"
+    false
   end
 
 end

@@ -284,7 +284,7 @@ lt:
       form:
         submit_button: Dovanoti idėją
     created:
-      title: Sveikiname! Tu žengiai pirmą žingsnį.
+      title: Sveikiname! Tu žengei pirmą žingsnį.
       motivation: "Svarbu tinkamai parengti kampaniją, kad tavo pasiūlymas būtų sėkmingas. Pirmosios kelios dienos yra lemiamos."
       motivation_2: "<strong>Šią idėją turi patvirtinti administratorius.</strong>"
       publish: Ne, noriu iškart paskelbti pasiūlymą
