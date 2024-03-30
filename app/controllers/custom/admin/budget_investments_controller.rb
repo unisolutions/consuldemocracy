@@ -19,6 +19,7 @@ class Admin::BudgetInvestmentsController < Admin::BaseController
 
   helper_method :resource_model, :resource_name
   respond_to :html, :js
+
   def index
     load_tags
     respond_to do |format|
@@ -75,74 +76,74 @@ class Admin::BudgetInvestmentsController < Admin::BaseController
 
   private
 
-    def load_comments
-      @commentable = @investment
-      @comment_tree = CommentTree.new(@commentable, params[:page], @current_order, valuations: true)
-      set_comment_flags(@comment_tree.comments)
-    end
+  def load_comments
+    @commentable = @investment
+    @comment_tree = CommentTree.new(@commentable, params[:page], @current_order, valuations: true)
+    set_comment_flags(@comment_tree.comments)
+  end
 
-    def resource_model
-      Budget::Investment
-    end
+  def resource_model
+    Budget::Investment
+  end
 
-    def resource_name
-      resource_model.parameterize(separator: "_")
-    end
+  def resource_name
+    resource_model.parameterize(separator: "_")
+  end
 
-    def load_investments
-      @investments = Budget::Investment.scoped_filter(params, @current_filter).order_filter(params)
-      @investments = Kaminari.paginate_array(@investments) if @investments.is_a?(Array)
-      @investments = @investments.page(params[:page]) unless request.format.csv?
-    end
+  def load_investments
+    @investments = Budget::Investment.scoped_filter(params, @current_filter).order_filter(params)
+    @investments = Kaminari.paginate_array(@investments) if @investments.is_a?(Array)
+    @investments = @investments.page(params[:page]) unless request.format.csv?
+  end
 
-    def budget_investment_params
-      params.require(:budget_investment).permit(allowed_params)
-    end
+  def budget_investment_params
+    params.require(:budget_investment).permit(allowed_params)
+  end
 
-    def allowed_params
-      attributes = [:external_url, :heading_id, :administrator_id, :tag_list,
-                    :valuation_tag_list, :incompatible, :visible_to_valuators, :selected,
-                    :milestone_tag_list, valuator_ids: [], valuator_group_ids: [],
-                    image_attributes: image_attributes, documents_attributes: document_attributes,
-      ]
-      [*attributes, translation_params(Budget::Investment)]
-    end
+  def allowed_params
+    attributes = [:external_url, :heading_id, :administrator_id, :tag_list, :preliminary_price,
+                  :valuation_tag_list, :incompatible, :visible_to_valuators, :selected,
+                  :milestone_tag_list, valuator_ids: [], valuator_group_ids: [],
+                  image_attributes: image_attributes, documents_attributes: document_attributes,
+    ]
+    [*attributes, translation_params(Budget::Investment)]
+  end
 
-    def load_budget
-      @budget = Budget.find_by_slug_or_id! params[:budget_id]
-    end
+  def load_budget
+    @budget = Budget.find_by_slug_or_id! params[:budget_id]
+  end
 
-    def load_investment
-      @investment = @budget.investments.find(params[:id])
-    end
+  def load_investment
+    @investment = @budget.investments.find(params[:id])
+  end
 
-    def load_staff
-      @admins = @budget.administrators.includes(:user)
-      @valuators = @budget.valuators.includes(:user).order(description: :asc).order("users.email ASC")
-    end
+  def load_staff
+    @admins = @budget.administrators.includes(:user)
+    @valuators = @budget.valuators.includes(:user).order(description: :asc).order("users.email ASC")
+  end
 
-    def load_valuator_groups
-      @valuator_groups = ValuatorGroup.order(name: :asc)
-    end
+  def load_valuator_groups
+    @valuator_groups = ValuatorGroup.order(name: :asc)
+  end
 
-    def load_tags
-      @tags = Budget::Investment.tags_on(:valuation_tags).order(:name).distinct
-    end
+  def load_tags
+    @tags = Budget::Investment.tags_on(:valuation_tags).order(:name).distinct
+  end
 
-    def load_ballot
-      query = Budget::Ballot.where(user: current_user, budget: @budget)
-      @ballot = @budget.balloting? ? query.first_or_create! : query.first_or_initialize
-    end
+  def load_ballot
+    query = Budget::Ballot.where(user: current_user, budget: @budget)
+    @ballot = @budget.balloting? ? query.first_or_create! : query.first_or_initialize
+  end
 
-    def parse_valuation_filters
-      if params[:valuator_or_group_id]
-        model, id = params[:valuator_or_group_id].split("_")
+  def parse_valuation_filters
+    if params[:valuator_or_group_id]
+      model, id = params[:valuator_or_group_id].split("_")
 
-        if model == "group"
-          params[:valuator_group_id] = id
-        else
-          params[:valuator_id] = id
-        end
+      if model == "group"
+        params[:valuator_group_id] = id
+      else
+        params[:valuator_id] = id
       end
     end
+  end
 end

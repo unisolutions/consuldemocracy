@@ -72,7 +72,11 @@
             </div>
 
           <% end %>
-
+          <div>
+            <%= f.number_field :preliminary_price,
+                               label: "Preliminari projekto idėjos vertė <i>(Ne daugiau nei šeši skaitmenys)</i>".html_safe,
+                               class: "your-custom-class-for-styling" %>
+          </div>
         <% end %>
 
         <%= f.text_field :tag_list,
