@@ -40,7 +40,10 @@ module Budgets
 
     def index
       if @budget.phase == "balloting"
-        if current_user.administrator? == false && (current_user.district_citizen == false || current_user.age < 18)
+        if current_user == nil
+          redirect_to root_url, alert: "Balsuoti gali tik prisijungę vartotojai."
+        else
+          current_user.administrator? == false && (current_user.district_citizen == false || current_user.age < 18)
           redirect_to root_url, alert: "Balsuoti gali tik Kauno rajone gyvenamąją vietą deklaravę pilnamečiai asmenys"
         end
       end
