@@ -9,7 +9,6 @@ module Budgets
     include MapLocationAttributes
     include Translatable
 
-
     PER_PAGE = 10
 
     before_action :authenticate_user!, except: [:index, :show]
@@ -39,14 +38,19 @@ module Budgets
     helper_method :resource_model, :resource_name
     respond_to :html, :js
 
-
     def index
+      if @budget.phase == "balloting"
+        if current_user.administrator? == false && (current_user.district_citizen == false || current_user.age < 18)
+          redirect_to root_url, alert: "Balsuoti gali tik Kauno rajone gyvenamąją vietą deklaravę pilnamečiai asmenys"
+        end
+      end
       @investments = investments.page(params[:page]).per(PER_PAGE).for_render
       @investment_ids = @investments.ids
 
       @investments_in_map = investments
       @tag_cloud = tag_cloud
       @remote_translations = detect_remote_translations(@investments)
+
     end
 
     def new
