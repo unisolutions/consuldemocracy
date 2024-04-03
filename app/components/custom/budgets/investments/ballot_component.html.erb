@@ -1,6 +1,9 @@
 <% extend PluralHelper %>
 
 <div class="supports ballot">
+  <p class="text-center" style="font-size: 24px; color: darkblue; font-weight: bold;">
+    <%= pluralize_balsai(investment.ballot_lines_count) %>
+  </p>
   <% if voted? %>
     <div class="remove supported">
       <span class="icon-check-circle"
@@ -25,9 +28,6 @@
     </div>
   <% else %>
     <div class="add in-favor">
-      <p class="text-center" style="font-size: 24px; color: darkblue; font-weight: bold;">
-        <%= pluralize_balsai(investment.ballot_lines_count) %>
-      </p>
       <% if investment.should_show_price? %>
         <p class="investment-project-amount">
           <%= investment.formatted_price %>
