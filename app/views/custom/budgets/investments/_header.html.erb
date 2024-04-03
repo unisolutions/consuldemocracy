@@ -21,7 +21,9 @@
                           budget_ballot_path(@budget) %>
             </div>
             <br>
-
+            <div class="callout alert" style="width: 75%;">
+              <strong><%= "Savo pasirinkimus galite keisti iki balsavimo etapo pabaigos, t.y iki balandžio  15 d. 23.59 val"%></strong>
+            </div>
             <div class="group-buttons-container">
               <% @budget.groups.order(:id).each do |group| %>
                 <div class="group-container" style="display: inline-block; margin-right: 10px;">
