@@ -102,7 +102,7 @@ class Admin::BudgetInvestmentsController < Admin::BaseController
 
   def allowed_params
     attributes = [:external_url, :heading_id, :administrator_id, :tag_list, :preliminary_price,
-                  :valuation_tag_list, :incompatible, :visible_to_valuators, :selected,
+                  :valuation_tag_list, :incompatible, :visible_to_valuators, :selected, :ballot_winner,
                   :milestone_tag_list, valuator_ids: [], valuator_group_ids: [],
                   image_attributes: image_attributes, documents_attributes: document_attributes,
     ]

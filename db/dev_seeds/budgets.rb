@@ -166,9 +166,11 @@ section "Winner Investments" do
     )
     add_image_to_investment(investment) if Random.rand > 0.3
   end
+=begin
   budget.headings.each do |heading|
     Budget::Result.new(budget, heading).calculate_winners
   end
+=end
 end
 
 section "Creating Valuation Assignments" do
