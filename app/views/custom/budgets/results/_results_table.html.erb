@@ -33,6 +33,7 @@
     <tbody>
     <% amount_available = heading_price %>
     <% investments.each do |investment| %>
+
       <% percentage_of_votes = (investment.ballot_lines_count.to_f / @total_votes * 100).round(2) %>
 
       <tr id="<%= dom_id(investment) %>"
