@@ -24,7 +24,7 @@
     <% if can?(:read_results, budget) %>
       <div class="text-right">
         <%= link_to t("budgets.show.see_results"),
-                    budget_results_path(budget, heading_id: budget.headings.first),
+                    budget_results_path(budget, group_id: budget.groups.first),
                     class: "button expanded" %>
       </div>
     <% end %>

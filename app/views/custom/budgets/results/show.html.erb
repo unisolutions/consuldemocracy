@@ -32,11 +32,11 @@
       <%= t("budgets.results.heading_selection_title") %>
     </h3>
     <ul id="headings" class="menu vertical no-margin-top no-padding-top">
-      <% @headings.each do |heading| %>
+      <% @groups.each do |group| %>
         <li>
-          <%= link_to heading.name,
-                      budget_results_path(@budget, heading_id: heading.to_param),
-                      class: heading.to_param == @heading.to_param ? "is-active" : "" %>
+          <%= link_to group.name,
+                      budget_results_path(@budget, group_id: group.to_param),
+                      class: group.to_param == @group.to_param ? "is-active" : "" %>
         </li>
       <% end %>
     </ul>
@@ -44,27 +44,20 @@
 
   <div class="small-12 medium-9 large-10 column">
 
-
     <%= render "results_table", results_type: :compatible,
-                                title: @heading.name,
-                                heading_price: @heading.price,
-                                investments: @investments.compatible %>
+                                title: @group.name,
+                                heading_price: 0,
+                                investments: @investments %>
 
-    <% if @investments.incompatible.present? %>
-      <%= render "results_table", results_type: :incompatible,
-                                  title: t("budgets.results.incompatibles"),
-                                  heading_price: @heading.price,
-                                  investments: @investments.incompatible %>
-    <% end %>
 
     <p>
-      <%= link_to budget_investments_path(@budget, heading_id: @heading) do %>
+      <%= link_to budget_investments_path(@budget, group_id: @group) do %>
         <small><%= t("budgets.results.investment_proyects") %></small>
       <% end %><br>
-      <%= link_to budget_investments_path(@budget, heading_id: @heading, filter: "unfeasible") do %>
+      <%= link_to budget_investments_path(@budget, group_id: @group, filter: "unfeasible") do %>
         <small><%= t("budgets.results.unfeasible_investment_proyects") %></small>
       <% end %><br>
-      <%= link_to budget_investments_path(@budget, heading_id: @heading, filter: "unselected") do %>
+      <%= link_to budget_investments_path(@budget, group_id: @group, filter: "unselected") do %>
         <small><%= t("budgets.results.not_selected_investment_proyects") %></small>
       <% end %>
     </p>

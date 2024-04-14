@@ -1,10 +1,11 @@
 class Budget
   class Result
-    attr_accessor :budget, :heading, :current_investment
+    attr_accessor :budget, :heading, :group, :current_investment
 
-    def initialize(budget, heading)
+    def initialize(budget, heading, group = nil)
       @budget = budget
       @heading = heading
+      @group = group
     end
 
     def calculate_winners
@@ -20,7 +21,16 @@ class Budget
     end
 
     def investments
-      heading.investments.selected.sort_by_ballots
+      if group != nil
+        investments = []
+        group.headings.each do |heading|
+          investments.concat(heading.investments.selected)
+        end
+        investments.sort_by { |investment| [investment.ballot_winner ? 0 : 1, -investment.ballot_lines_count, -investment.id] }
+      else
+        heading.investments.selected.sort_by_ballots
+      end
+
     end
 
     def inside_budget?

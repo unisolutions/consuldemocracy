@@ -30,6 +30,9 @@ class Budget
       all.sort_by(&:name)
     end
 
+    def self.sort_by_id
+      all.sort_by(&:id)
+    end
     def multiple_headings?
       headings.size > 1
     end

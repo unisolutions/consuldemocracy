@@ -195,7 +195,7 @@ lt:
       link: Rezultatai
       page_title: "%{budget} - Rezultatai"
       heading: "Dalyvaujamųjų biudžetų rezultatai"
-      heading_selection_title: "Pagal vietovę"
+      heading_selection_title: "Pagal kategoriją"
       ballot_lines_count: Balsų skaičius
       ballot_lines_count_percentage: Balsų proc.
       hide_discarded_link: Slėpti atmestus
@@ -213,7 +213,7 @@ lt:
       link: Etapai
       page_title: "%{budget} - Etapai"
       heading: "Dalyvaujamųjų biudžetų etapai"
-      heading_selection_title: "Pagal vietovę"
+      heading_selection_title: "Pagal kategoriją"
       no_winner_investments: "Šiame etape nėra laimėtojų idėjų"
       filters:
         status:

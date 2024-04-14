@@ -2,13 +2,22 @@ module Budgets
   class ResultsController < ApplicationController
     before_action :load_budget
     before_action :load_heading
+    before_action :load_groups
 
     authorize_resource :budget
 
     def show
       authorize! :read_results, @budget
-      @investments = Budget::Result.new(@budget, @heading).investments
+      if params[:heading_id] != nil
+        @investments = Budget::Result.new(@budget, @heading, nil).investments
+      end
+      if params[:group_id] != nil
+        @investments = Budget::Result.new(@budget, nil, @group).investments
+        @total_votes = total_votes_in_group(@group)
+      end
+
       @headings = @budget.headings.sort_by_name
+      @groups = @budget.groups.sort_by_id
     end
 
     private
@@ -22,6 +31,22 @@ module Budgets
           headings = @budget.headings
           @heading = headings.find_by_slug_or_id(params[:heading_id]) || headings.first
         end
+      end
+
+      def load_groups
+        if @budget.present?
+          groups = @budget.groups
+          @group = groups.find_by_slug_or_id(params[:group_id]) || groups.first
+        end
+      end
+      def total_votes_in_group(group)
+        total_votes = 0
+        group.headings.each do |heading|
+          heading.investments.selected.each do |investment|
+            total_votes += investment.ballot_lines_count
+          end
+        end
+        total_votes
       end
   end
 end
