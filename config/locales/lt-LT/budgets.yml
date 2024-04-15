@@ -143,6 +143,7 @@ lt:
         project_unfeasible: "Šis investicinis projektas <strong>pažymėtas kaip neįgyvendinamas</strong> ir nekeliauja į balsavimo etapą."
         project_selected: "Šis investicinis projektas <strong>pasirinktas</strong> balsavimo etapui."
         project_winner: "Laimėjęs investicinis projektas"
+        project_loser: "Pralaimėjęs investicinis projektas"
         project_not_selected: "Šis investicinis projektas <strong>nebuvo pasirinktas</strong> balsavimo etapui."
         see_price_explanation: Rodyti kainos paaiškinimą
       wrong_price_format: Tik sveikieji skaičiai
@@ -194,15 +195,16 @@ lt:
       link: Rezultatai
       page_title: "%{budget} - Rezultatai"
       heading: "Dalyvaujamųjų biudžetų rezultatai"
-      heading_selection_title: "Pagal rajoną"
+      heading_selection_title: "Pagal kategoriją"
       ballot_lines_count: Balsų skaičius
+      ballot_lines_count_percentage: Balsų proc.
       hide_discarded_link: Slėpti atmestus
       show_all_link: Rodyti visus
       price: Kaina
       amount_available: Prieinamos lėšos
       accepted: "Priimtas projektas: "
       discarded: "Atmestas projektas: "
-      incompatibles: Nesuderinami
+      incompatibles: Netinkami
       investment_title: Projekto pavadinimas
       investment_proyects: Visų idėjų sąrašas
       unfeasible_investment_proyects: Visų neįgyvendinamų idėjų sąrašas
@@ -211,7 +213,7 @@ lt:
       link: Etapai
       page_title: "%{budget} - Etapai"
       heading: "Dalyvaujamųjų biudžetų etapai"
-      heading_selection_title: "Pagal rajoną"
+      heading_selection_title: "Pagal kategoriją"
       no_winner_investments: "Šiame etape nėra laimėtojų idėjų"
       filters:
         status:

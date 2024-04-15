@@ -22,7 +22,7 @@
             </div>
             <br>
             <div class="callout alert" style="width: 75%;">
-              <strong><%= "Savo pasirinkimus galite keisti iki balsavimo etapo pabaigos, t.y iki balandžio  15 d. 23.59 val"%></strong>
+              <strong><%= "Savo pasirinkimus galite keisti iki balsavimo etapo pabaigos, t.y iki balandžio  15 d. 23.59 val" %></strong>
             </div>
             <div class="group-buttons-container">
               <% @budget.groups.order(:id).each do |group| %>
@@ -31,15 +31,21 @@
                 </div>
               <% end %>
             </div>
-
-            <div class="group-heading">
-              <% if params[:group_name].present? %>
-                <h2 class="group-name">Kategorija: <%= params[:group_name] %></h2>
-              <% else %>
-                <h2 class="group-name">Kategorija: <%= @heading.group.name %></h2>
-              <% end %>
-            </div>
           <% end %>
+          <div class="group-heading">
+            <% if params[:group_name].present? %>
+              <h2 class="group-name">Kategorija: <%= params[:group_name] %></h2>
+            <% else %>
+              <h2 class="group-name">Kategorija: <%= @heading.group.name %></h2>
+            <% end %>
+          </div>
+
+          <div class="heading-heading">
+            <% if params[:heading_id].present? %>
+              <h2 class="group-name">Vieta: <%= @heading.name %></h2>
+            <% end %>
+          </div>
+
         </div>
       </div>
     </div>
@@ -57,8 +63,6 @@
     </div>
   </div>
 <% end %>
-
-
 <script>
   function changeGroupName(groupName, event) {
     event.preventDefault(); // Prevent the default behavior of the link

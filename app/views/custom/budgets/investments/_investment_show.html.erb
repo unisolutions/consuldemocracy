@@ -20,7 +20,7 @@
               investment.author,
               Flag.flagged?(current_user, investment)] do %>
       <div class="small-12 medium-9 column">
-        <% if @budget.phase == "balloting" %>
+        <% if @budget.phase == "balloting" || @budget.phase == "finished" %>
           <% investment_group_id = investment.heading.group_id %>
           <% investment_group_name = investment.heading.group.name %>
           <%= back_link_to budget_investments_path(investment.budget, group_id: investment_group_id, group_name: investment_group_name) %>
@@ -73,8 +73,8 @@
           <%= sanitize(t("budgets.investments.show.project_unfeasible")) %>
         </div>
       <% elsif investment.winner? && @budget.finished? %>
-        <div class="callout success">
-          <strong><%= t("budgets.investments.show.project_winner") %></strong>
+        <div class="callout <%= investment.ballot_winner ? 'success' : 'error' %>">
+          <strong><%= t("budgets.investments.show.#{investment.ballot_winner ? 'project_winner' : 'project_loser'}") %></strong>
         </div>
       <% elsif investment.selected? %>
         <div class="callout success">
