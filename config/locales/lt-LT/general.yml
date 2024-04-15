@@ -605,7 +605,7 @@ lt:
       cant_answer_verify: "Norėdami atsakyti, turite %{verify_link}."
       verify_link: "patvirtinti savo paskyrą"
       cant_answer_expired: "Ši apklausa baigėsi."
-      cant_answer_wrong_geozone: "Šis klausimas jūsų rajone neprieinamas."
+      cant_answer_wrong_geozone: "Dalyvauti apklausose gali tik Kauno rajone gyvenamąją vietą deklaravę pilnamečiai asmenys."
       more_info_title: "Papildoma informacija"
       documents: Dokumentai
       zoom_plus: Padidinti vaizdą

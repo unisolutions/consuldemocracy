@@ -112,6 +112,16 @@ module Abilities
         image.imageable_type == "Poll::Question::Answer" && can?(:update, image.imageable)
       end
 
+      can :answer, Poll do |poll|
+        poll.answerable_by?(user)
+      end
+      can :answer, Poll::Question do |question|
+        question.answerable_by?(user)
+      end
+      can :destroy, Poll::Answer do |answer|
+        answer.author == user && answer.question.answerable_by?(user)
+      end
+
       can :manage, SiteCustomization::Page
       can :manage, SiteCustomization::Image
       can :manage, SiteCustomization::ContentBlock

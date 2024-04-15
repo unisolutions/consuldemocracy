@@ -107,17 +107,20 @@ module Abilities
           can [:show, :create], Budget::Ballot, budget: { phase: "balloting" }
           can [:create, :destroy], Budget::Ballot::Line, budget: { phase: "balloting" }
         end
+
         can :create, DirectMessage
         can :show, DirectMessage, sender_id: user.id
 
-        can :answer, Poll do |poll|
-          poll.answerable_by?(user)
-        end
-        can :answer, Poll::Question do |question|
-          question.answerable_by?(user)
-        end
-        can :destroy, Poll::Answer do |answer|
-          answer.author == user && answer.question.answerable_by?(user)
+        if user.district_citizen && user.age > 17
+          can :answer, Poll do |poll|
+            poll.answerable_by?(user)
+          end
+          can :answer, Poll::Question do |question|
+            question.answerable_by?(user)
+          end
+          can :destroy, Poll::Answer do |answer|
+            answer.author == user && answer.question.answerable_by?(user)
+          end
         end
       end
 
